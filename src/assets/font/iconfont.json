@@ -1,0 +1,65 @@
+{
+  "id": "1693094",
+  "name": "supermall",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "160206",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "925415",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "171408",
+      "name": "top",
+      "font_class": "top",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "7605161",
+      "name": "QR-code2",
+      "font_class": "QR-code",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "13509582",
+      "name": "cart",
+      "font_class": "cart-copy",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "7252051",
+      "name": "头像",
+      "font_class": "touxiang",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "9198944",
+      "name": "icon-goods category",
+      "font_class": "icon-goodscategory",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "11665567",
+      "name": "home",
+      "font_class": "shouye",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}

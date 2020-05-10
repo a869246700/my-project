@@ -1,4 +1,5 @@
 @import "./normalize.css";
+@import '../font/iconfont.css';
 
 html, body, #app, p {
   padding: 0;
