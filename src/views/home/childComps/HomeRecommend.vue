@@ -1,6 +1,10 @@
 <template>
-  <van-grid :gutter="5" :column-num="4">
-    <van-grid-item v-for="(item, index) in recommendList" :key="index">
+  <van-grid :column-num="4" border :gutter="2">
+    <van-grid-item
+      v-for="(item, index) in recommendList"
+      :key="index"
+      @click="handleItemClick(item.title)"
+    >
       <img v-lazy="item.image" />
       <span>{{item.title}}</span>
     </van-grid-item>
@@ -17,14 +21,23 @@ export default {
         return []
       }
     }
+  },
+  methods: {
+    handleItemClick(title) {
+      this.Toast.loading({
+        message: title,
+        forbidClick: true,
+        overlay: true
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
 .van-grid-item img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 10px;
 }
 

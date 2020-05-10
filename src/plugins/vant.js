@@ -17,7 +17,8 @@ import {
   SwipeItem,
   Lazyload,
   Grid,
-  GridItem
+  GridItem,
+  Toast
 } from 'vant'
 
 Vue.use(Button)
@@ -40,3 +41,5 @@ Vue.use(Lazyload, {
 })
 Vue.use(Grid)
 Vue.use(GridItem)
+
+Vue.prototype.Toast = Toast

@@ -1,9 +1,9 @@
 <template>
   <div>
     <van-grid :column-num="2" :gutter="5">
-      <van-grid-item v-for="(item, index) in goodsList" :key="index" class="item">
+      <van-grid-item v-for="(item, index) in goodsList" :key="index" @click="handleItemClick(item)">
         <template>
-          <div class="aaa">
+          <div class="item">
             <img v-lazy="item.show.img" />
             <div class="item-info">
               <p>{{item.title}}</p>
@@ -27,18 +27,28 @@ export default {
         return []
       }
     }
+  },
+  methods: {
+    handleItemClick(item) {
+      this.Toast.success({
+        message: '获取商品信息成功',
+        overlay: true,
+        forbidClick: true
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
 .item {
+  position: relative;
   text-align: center;
   overflow: hidden;
   font-size: 12px;
 }
 
-.item .item-info p {
+.item-info p {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
