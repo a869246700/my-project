@@ -1,5 +1,5 @@
 <template>
-  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+  <van-pull-refresh v-model="refreshing" @refresh="onRefresh" loading-text="刷新中...">
     <van-list
       v-model="loading"
       :finished="finished"
@@ -28,6 +28,11 @@ export default {
   methods: {
     // 加载
     onLoad() {
+      console.log(this.$router)
+      if (this.$router.history.current.path === '/category') {
+        this.finished = true
+        this.loading = false
+      }
       this.$emit('handleDataLoad')
     },
     onScroll() {
@@ -44,6 +49,11 @@ export default {
     onRefresh() {
       // 处于加载状态
       this.loading = true
+      if (this.$router.history.current.path === '/category') {
+        setTimeout(() => {
+          this.refreshing = false
+        }, 1000)
+      }
       // 触发重新刷新事件
       this.$emit('handleRefresh')
     }

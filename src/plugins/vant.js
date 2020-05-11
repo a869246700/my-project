@@ -19,7 +19,9 @@ import {
   Grid,
   GridItem,
   Toast,
-  PullRefresh
+  PullRefresh,
+  Sidebar,
+  SidebarItem
 } from 'vant'
 
 Vue.use(Button)
@@ -43,5 +45,7 @@ Vue.use(Lazyload, {
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(PullRefresh)
+Vue.use(Sidebar)
+Vue.use(SidebarItem)
 
 Vue.prototype.Toast = Toast

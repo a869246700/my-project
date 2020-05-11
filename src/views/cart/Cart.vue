@@ -1,10 +1,16 @@
 <template>
-  <div>购物车</div>
+  <nav-bar>
+      <span class="title">购物车</span>
+    </nav-bar>
 </template>
 
 <script>
+import NavBar from 'components/common/navbar/NavBar'
 export default {
-  name: 'Cart'
+  name: 'Cart',
+  components: {
+    NavBar
+  }
 }
 </script>
 
