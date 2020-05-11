@@ -1,10 +1,18 @@
 <template>
-  <div>个人中心</div>
+  <div>
+    <nav-bar>
+      <span class="title">个人中心</span>
+    </nav-bar>
+  </div>
 </template>
 
 <script>
+import NavBar from 'components/common/navbar/NavBar'
 export default {
-  name: 'Profle'
+  name: 'Profle',
+  components: {
+    NavBar
+  }
 }
 </script>
 

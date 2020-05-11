@@ -1,7 +1,17 @@
 <template>
   <div id="home">
     <!-- 头部框 -->
-    <nav-bar />
+    <nav-bar>
+      <search />
+    </nav-bar>
+
+    <!-- tab-control -->
+    <tab-control
+      :tabs="tabControls"
+      @tabClick="handleTabClick"
+      class="tab-control"
+      v-if="isTabFixed"
+    />
 
     <!-- 滚动框 -->
     <scroll
@@ -18,8 +28,7 @@
       <home-recommend :recommendList="recommendList" />
 
       <!-- 顶部导航栏，吸顶效果 -->
-      <tab-control :tabs="tabControls" @tabClick="handleTabClick" class="tabcontrol" />
-
+      <tab-control :tabs="tabControls" @tabClick="handleTabClick" ref="tabcontrol"/>
       <!-- 物品显示 -->
       <goods :goodsList="goodsList" ref="goods" />
     </scroll>
@@ -32,6 +41,7 @@
 <script>
 // 导入组件
 import NavBar from 'components/common/navbar/NavBar'
+import Search from 'components/common/search/Search'
 import TabControl from 'components/common/tabcontrol/TabControl'
 import Scroll from 'components/common/scroll/Scroll'
 import Goods from 'components/common/goods/Goods'
@@ -45,6 +55,7 @@ export default {
   name: 'Home',
   components: {
     NavBar,
+    Search,
     TabControl,
     Scroll,
     Goods,
@@ -61,6 +72,10 @@ export default {
         { title: '精选', name: 'sell' },
         { title: '最新', name: 'new' }
       ],
+      // tabControl 离顶高度
+      tabOffsetTop: 0,
+      // tabcontrol 是否吸顶
+      isTabFixed: false,
       // 轮播图数据
       swiperList: [],
       // 模拟页面
@@ -134,18 +149,18 @@ export default {
     },
     // 监听页面滚动
     handleScroll(offsetTop) {
-      // 记录当前类型的滚动高度
+      // 1. 判断 backTop 是否显示
       this.goods[this.currentType].offsetTop = offsetTop
       this.showBackTop(offsetTop, 1000)
+      // 2. 决定 tab-control 是否吸顶
+      this.isTabFixed = offsetTop > this.$refs.tabcontrol.$el.offsetTop
     },
     // 下拉刷新首页
     handleRefresh() {
       // 刷新首页所有数据
-      // this.goods.pop.list = []
-      // this.goods.new.list = []
-      // this.goods.sell.list = []
-      // 刷新当前类型
-      this.goods[this.currentType].list = []
+      this.goods.pop.list = []
+      this.goods.new.list = []
+      this.goods.sell.list = []
       this.initHomeDatas()
     }
   },
@@ -167,9 +182,17 @@ export default {
 <style lang="less" scoped>
 #home {
   margin-bottom: 50px;
-}
 
-.scroll {
-  margin-top: 49px;
+  .scroll {
+    margin-top: 49px;
+  }
+
+  .tab-control {
+    position: fixed;
+    top: 49px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  }
 }
 </style>
