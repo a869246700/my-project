@@ -1,10 +1,7 @@
 <template>
-  <van-sticky :offset-top="49">
-    <van-tabs v-model="activeIndex" border @click="handleTabClick">
-      <van-tab :title="item.title" v-for="(item, index) in tabs" :key="index" :name="item.name">
-      </van-tab>
-    </van-tabs>
-  </van-sticky>
+  <van-tabs v-model="activeIndex" border @click="handleTabClick">
+    <van-tab :title="item.title" v-for="(item, index) in tabs" :key="index" :name="item.name"></van-tab>
+  </van-tabs>
 </template>
 
 <script>

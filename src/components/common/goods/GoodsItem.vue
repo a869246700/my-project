@@ -1,25 +1,41 @@
 <template>
-  <div>
-    <van-grid :column-num="2" :gutter="5">
-      <goods-item v-for="(item, index) in goodsList" :key="index" :goodsItem="item">
-      </goods-item>
-    </van-grid>
-  </div>
+  <van-grid-item @click="handleItemClick()">
+    <div class="item">
+      <img v-lazy="showImg" />
+      <div class="item-info">
+        <p>{{goodsItem.title}}</p>
+        <span class="price">{{'￥' + goodsItem.price}}</span>
+        <span class="collect">{{goodsItem.cfav}}</span>
+      </div>
+    </div>
+  </van-grid-item>
 </template>
 
 <script>
-import GoodsItem from './GoodsItem'
 export default {
-  name: 'Goods',
-  components: {
-    GoodsItem
-  },
+  name: 'GoodsItem',
   props: {
-    goodsList: {
-      type: Array,
+    goodsItem: {
+      type: Object,
       default() {
-        return []
+        return {}
       }
+    }
+  },
+  methods: {
+    handleItemClick() {
+      this.Toast.success({
+        message: '获取商品信息成功',
+        overlay: true,
+        forbidClick: true
+      })
+    }
+  },
+  computed: {
+    showImg() {
+      return (
+        this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img
+      )
     }
   }
 }
