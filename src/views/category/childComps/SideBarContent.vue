@@ -37,7 +37,6 @@ export default {
     // tab栏点击
     handleTabClick(name) {
       this.$emit('handleTabClick', name)
-      console.log(this.goodsList)
     }
   }
 }
@@ -50,7 +49,7 @@ export default {
   overflow: scroll;
 
   .tab-control {
-    // position: sticky;
+    position: sticky;
     top: 0;
     z-index: 999;
   }

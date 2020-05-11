@@ -5,14 +5,6 @@
       <search />
     </nav-bar>
 
-    <!-- tab-control -->
-    <tab-control
-      :tabs="tabControls"
-      @tabClick="handleTabClick"
-      class="tab-control"
-      v-if="isTabFixed"
-    />
-
     <!-- 滚动框 -->
     <scroll
       ref="scroll"
@@ -27,14 +19,21 @@
       <!-- 推荐视图 -->
       <home-recommend :recommendList="recommendList" />
 
-      <!-- 顶部导航栏，吸顶效果 -->
-      <tab-control :tabs="tabControls" @tabClick="handleTabClick" ref="tabcontrol"/>
+      <!-- 粘性布局 -->
+      <van-sticky :offset-top="49">
+        <!-- 顶部导航栏，吸顶效果 -->
+        <tab-control :tabs="tabControls" @tabClick="handleTabClick" ref="tabcontrol" />
+      </van-sticky>
+
       <!-- 物品显示 -->
       <goods :goodsList="goodsList" ref="goods" />
     </scroll>
 
     <!-- 返回顶部按钮 -->
     <back-top v-show="isShowBackTop" @click.native="backTop" />
+
+    <!-- mock -->
+    <mock ref="mock" />
   </div>
 </template>
 
@@ -49,7 +48,7 @@ import BackTop from 'components/content/backtop/BackTop'
 import HomeSwiper from './childComps/HomeSwiper'
 import HomeRecommend from './childComps/HomeRecommend'
 import { getHomeMultidata, getHomeGoods } from 'network/home'
-import { backTopMixin } from 'common/mixin.js'
+import { backTopMixin, MockMixin } from 'common/mixin'
 
 export default {
   name: 'Home',
@@ -63,7 +62,7 @@ export default {
     HomeSwiper,
     HomeRecommend
   },
-  mixins: [backTopMixin],
+  mixins: [backTopMixin, MockMixin],
   data() {
     return {
       // tabControl 的 tabs
@@ -72,10 +71,6 @@ export default {
         { title: '精选', name: 'sell' },
         { title: '最新', name: 'new' }
       ],
-      // tabControl 离顶高度
-      tabOffsetTop: 0,
-      // tabcontrol 是否吸顶
-      isTabFixed: false,
       // 轮播图数据
       swiperList: [],
       // 模拟页面
@@ -136,11 +131,18 @@ export default {
       this.getData('pop', ++this.goods.pop.page)
       this.getData('sell', ++this.goods.sell.page)
       this.getData('new', ++this.goods.new.page)
+      setTimeout(() => {
+        this.$refs.mock.isMockShow = false
+      }, 500)
     },
     // 监听tabs点击切换
     handleTabClick(name) {
       this.currentType = name
-      this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
+      if (this.goods[this.currentType].offsetTop <= 336) {
+        this.$refs.scroll.scrollTo(336)
+      } else {
+        this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
+      }
     },
     // 加载当前类型的数据
     getCurrentTypeData() {
@@ -152,8 +154,6 @@ export default {
       // 1. 判断 backTop 是否显示
       this.goods[this.currentType].offsetTop = offsetTop
       this.showBackTop(offsetTop, 1000)
-      // 2. 决定 tab-control 是否吸顶
-      this.isTabFixed = offsetTop > this.$refs.tabcontrol.$el.offsetTop
     },
     // 下拉刷新首页
     handleRefresh() {

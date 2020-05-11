@@ -2,6 +2,7 @@ import BackTop from 'components/content/backtop/BackTop'
 import {
   animate
 } from './utils'
+import Mock from 'components/content/mock/Mock'
 
 export const backTopMixin = {
   data() {
@@ -19,5 +20,11 @@ export const backTopMixin = {
   },
   components: {
     BackTop
+  }
+}
+
+export const MockMixin = {
+  components: {
+    Mock
   }
 }

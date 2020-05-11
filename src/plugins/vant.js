@@ -21,7 +21,12 @@ import {
   Toast,
   PullRefresh,
   Sidebar,
-  SidebarItem
+  SidebarItem,
+  Overlay,
+  Loading,
+  GoodsAction,
+  GoodsActionButton,
+  GoodsActionIcon
 } from 'vant'
 
 Vue.use(Button)
@@ -47,5 +52,13 @@ Vue.use(GridItem)
 Vue.use(PullRefresh)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
+Vue.use(SidebarItem)
+Vue.use(Overlay)
+Vue.use(Loading)
+Vue.use(GoodsAction)
+Vue.use(GoodsActionButton)
+Vue.use(GoodsActionIcon)
 
+Toast.setDefaultOptions({ duration: 1000 })
+Toast.setDefaultOptions('loading', { forbidClick: true })
 Vue.prototype.Toast = Toast
