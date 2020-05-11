@@ -6,8 +6,8 @@
     <template #title class="center">
       <div class="search">
         <van-icon name="search" class="search-icon" />
-        <input type="text" v-model.trim="searchContent" @keydown.enter="handleSearch"/>
-        <van-icon name="close" class="close" v-if="searchContent" @click="handleClickClear"/>
+        <input type="text" v-model.trim="searchContent" @keydown.enter="handleSearch" />
+        <van-icon name="close" class="close" v-if="searchContent" @click="handleClickClear" />
       </div>
     </template>
     <template #right>
@@ -39,56 +39,56 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .van-nav-bar {
   background-color: #ff6b81;
   color: #fff;
   height: 49px;
-}
 
-.logo {
-  font-size: 32px;
-  font-weight: 700;
-}
+  .logo {
+    font-size: 32px;
+    font-weight: 700;
+  }
 
-.search {
-  position: relative;
-  color: #999;
-  font-size: 18px;
-}
+  .search {
+    position: relative;
+    color: #999;
+    font-size: 18px;
 
-.search input {
-  width: 100%;
-  height: 35px;
-  border-radius: 30px;
-  padding: 0 30px;
-  border: 0;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 14px;
-}
+    input {
+      width: 100%;
+      height: 35px;
+      border-radius: 30px;
+      padding: 0 30px;
+      border: 0;
+      outline: none;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
 
-.search-icon,
-.close {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  color: #999;
-}
+    .search-icon,
+    .close {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      color: #999;
+    }
 
-.search-icon {
-  left: 8px;
-  height: 16px;
-  line-height: 16px;
-  width: 16px;
-}
+    .search-icon {
+      left: 8px;
+      height: 16px;
+      line-height: 16px;
+      width: 16px;
+    }
 
-.close {
-  right: 5px;
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
-  font-size: 20px;
+    .close {
+      right: 5px;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      font-size: 20px;
+    }
+  }
 }
 </style>

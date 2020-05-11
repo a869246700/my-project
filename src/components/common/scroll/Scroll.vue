@@ -1,13 +1,15 @@
 <template>
-  <van-list
-    v-model="loading"
-    :finished="finished"
-    finished-text="没有更多了"
-    @load="onLoad"
-    :immediate-check="false"
-  >
-    <slot></slot>
-  </van-list>
+  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      :immediate-check="false"
+    >
+      <slot></slot>
+    </van-list>
+  </van-pull-refresh>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
       finished: false,
       // 是否处于加载状态
       loading: false,
+      refreshing: false,
       scrollTop: 0
     }
   },
@@ -36,6 +39,13 @@ export default {
     scrollTo(target) {
       // 切换scroll的初始高度
       document.documentElement.scrollTop = target
+    },
+    // 下拉刷新
+    onRefresh() {
+      // 处于加载状态
+      this.loading = true
+      // 触发重新刷新事件
+      this.$emit('handleRefresh')
     }
   },
   mounted() {
@@ -44,7 +54,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .van-list {
   overflow: hidden;
 }

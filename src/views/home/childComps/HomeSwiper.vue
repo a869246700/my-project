@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .my-swipe .van-swipe-item {
   color: #fff;
   text-align: center;

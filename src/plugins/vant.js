@@ -18,7 +18,8 @@ import {
   Lazyload,
   Grid,
   GridItem,
-  Toast
+  Toast,
+  PullRefresh
 } from 'vant'
 
 Vue.use(Button)
@@ -41,5 +42,6 @@ Vue.use(Lazyload, {
 })
 Vue.use(Grid)
 Vue.use(GridItem)
+Vue.use(PullRefresh)
 
 Vue.prototype.Toast = Toast

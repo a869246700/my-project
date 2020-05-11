@@ -34,14 +34,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.van-grid-item img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-}
-
-.van-grid-item span {
-  font-size: 12px;
+<style lang="less" scoped>
+.van-grid-item {
+  img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+  span {
+    font-size: 12px;
+  }
 }
 </style>

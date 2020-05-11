@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .back-top {
   position: fixed;
   right: 18px;
@@ -21,10 +21,10 @@ export default {
   text-align: center;
   background: #f6f6f6;
   border-radius: 50%;
-}
 
-.back-top span {
-  font-size: 32px;
-  color: #ff5557;
+  span {
+    font-size: 32px;
+    color: #ff5557;
+  }
 }
 </style>

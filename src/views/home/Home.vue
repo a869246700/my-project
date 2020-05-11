@@ -9,6 +9,7 @@
       class="scroll"
       @handleDataLoad="getCurrentTypeData"
       @onScroll="handleScroll"
+      @handleRefresh="handleRefresh"
     >
       <!-- 轮播图 -->
       <home-swiper :imgs="swiperList" />
@@ -70,17 +71,17 @@ export default {
       goods: {
         pop: {
           list: [],
-          page: 1,
+          page: 0,
           offsetTop: 0
         },
         new: {
           list: [],
-          page: 1,
+          page: 0,
           offsetTop: 0
         },
         sell: {
           list: [],
-          page: 1,
+          page: 0,
           offsetTop: 0
         }
       },
@@ -98,6 +99,9 @@ export default {
     // 获取商品的数据
     async getData(type, page) {
       const { data: res } = await getHomeGoods(type, page)
+      if (this.$refs.scroll.refreshing) {
+        this.$refs.scroll.refreshing = false
+      }
       this.$refs.scroll.loading = false
 
       if (res.data.list.length === 0) {
@@ -114,9 +118,9 @@ export default {
     },
     // 初始化首页商品数据
     initHomeDatas() {
-      this.getData('pop', 1)
-      this.getData('sell', 1)
-      this.getData('new', 1)
+      this.getData('pop', ++this.goods.pop.page)
+      this.getData('sell', ++this.goods.sell.page)
+      this.getData('new', ++this.goods.new.page)
     },
     // 监听tabs点击切换
     handleTabClick(name) {
@@ -134,8 +138,16 @@ export default {
       this.goods[this.currentType].offsetTop = offsetTop
       this.showBackTop(offsetTop, 1000)
     },
-    // 点击返回最高
-    clickBackTop() {}
+    // 下拉刷新首页
+    handleRefresh() {
+      // 刷新首页所有数据
+      // this.goods.pop.list = []
+      // this.goods.new.list = []
+      // this.goods.sell.list = []
+      // 刷新当前类型
+      this.goods[this.currentType].list = []
+      this.initHomeDatas()
+    }
   },
   computed: {
     // 数据列表数据
@@ -152,10 +164,7 @@ export default {
 }
 </script>
 
-<style scoped>
-#home {
-  margin-bottom: 50px;
-}
+<style lang="less" scoped>
 .scroll {
   margin-top: 49px;
 }
