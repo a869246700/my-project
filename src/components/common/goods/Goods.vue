@@ -48,6 +48,7 @@ export default {
   font-size: 12px;
 }
 
+<<<<<<< HEAD
 .item-info p {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -61,6 +62,21 @@ export default {
   width: 100%;
   margin-bottom: 10px;
   border-radius: 5px;
+=======
+.item img {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.item-info p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 10px;
+>>>>>>> category
 }
 
 .price {
