@@ -40,47 +40,45 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .item {
   position: relative;
   text-align: center;
   overflow: hidden;
   font-size: 12px;
+}
 
-  img {
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
+.item-info p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
 
-  .item-info {
-    p {
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
+.item img {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
 
-    .price {
-      color: #ff5777;
-      margin-right: 20px;
-    }
+.price {
+  color: #ff5777;
+  margin-right: 20px;
+}
 
-    collect {
-      position: relative;
-    }
+.collect {
+  position: relative;
+}
 
-    .collect::before {
-      content: '';
-      position: absolute;
-      left: -15px;
-      top: 0;
-      width: 14px;
-      height: 14px;
-      background: url('~assets/img/common/collect.svg') 0 0/14px 14px;
-    }
-  }
+.collect::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  background: url('~assets/img/common/collect.svg') 0 0/14px 14px;
 }
 </style>
