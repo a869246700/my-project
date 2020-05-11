@@ -55,7 +55,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-list {
-  overflow: hidden;
-}
 </style>

@@ -165,6 +165,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#home {
+  margin-bottom: 50px;
+}
+
 .scroll {
   margin-top: 49px;
 }
