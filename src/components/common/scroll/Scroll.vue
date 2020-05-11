@@ -28,7 +28,6 @@ export default {
   methods: {
     // 加载
     onLoad() {
-      console.log(this.$router)
       if (this.$router.history.current.path === '/category') {
         this.finished = true
         this.loading = false

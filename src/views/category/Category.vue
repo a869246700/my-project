@@ -15,6 +15,9 @@
         @handleTabClick="tabClick"
       />
     </div>
+
+    <!-- mock -->
+    <mock ref="mock" />
   </div>
 </template>
 
@@ -22,6 +25,7 @@
 import NavBar from 'components/common/navbar/NavBar'
 import SideBar from './childComps/SideBar'
 import SideBarContent from './childComps/SideBarContent'
+import { MockMixin } from 'common/mixin'
 import {
   getCategory,
   getSubcategory,
@@ -34,6 +38,7 @@ const NEW = 'new'
 
 export default {
   name: 'Category',
+  mixins: [MockMixin],
   components: {
     NavBar,
     SideBar,
@@ -116,6 +121,9 @@ export default {
       // 3. 数据存储
       this.categoryData[this.currentIndex].categoryDetail[type] = res
       this.categoryData = { ...this.categoryData }
+
+      // 4. 隐藏mock
+      this.$refs.mock.isMockShow = false
     },
     // 导航栏切换
     tabClick(name) {
@@ -123,6 +131,8 @@ export default {
     },
     // 侧边栏点击
     handleSideBarClick(index) {
+      // 隐藏 mock
+      this.$refs.mock.isMockShow = true
       this._getSubcategory(index)
     }
   },

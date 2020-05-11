@@ -24,10 +24,11 @@ export default {
   },
   methods: {
     handleItemClick() {
-      this.Toast.success({
-        message: '获取商品信息成功',
-        overlay: true,
-        forbidClick: true
+      this.$router.push({
+        path: '/detail',
+        query: {
+          id: this.goodsItem.iid
+        }
       })
     }
   },
