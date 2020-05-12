@@ -187,6 +187,10 @@ export default {
       // 点击跳转至固定的高度
       this.$refs.scroll.scrollTo(this.themeTopYs[index])
     }
+  },
+  mounted() {
+    // 进入页面时，防止首页滚动的高度对本页面进行干扰，进入组件时，置顶
+    this.$refs.scroll.scrollTo(0)
   }
 }
 </script>
