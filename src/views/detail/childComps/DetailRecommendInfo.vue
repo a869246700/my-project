@@ -24,7 +24,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .recommend-info {
   padding: 5px;
 }

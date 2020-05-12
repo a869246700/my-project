@@ -19,11 +19,11 @@
       <!-- 商家信息 -->
       <detail-shop-info :shop="shop" />
 
-      <!-- 商品详细信息 -->
-      <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" />
-
       <!-- 商品参数列表 -->
       <detail-param-info :paramInfo="paramInfo" ref="params" />
+
+      <!-- 商品详细信息 -->
+      <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
 
       <!-- 用户评论 -->
       <detail-comment-info :comment-info="commentInfo" ref="comment" />
@@ -32,13 +32,16 @@
       <detail-recommend-info :recommends="recommends" ref="recommend" />
     </scroll>
 
-    <detail-bottom />
+    <detail-bottom @addCart="handleBottomClick" />
 
     <!-- mock -->
     <mock ref="mock" />
 
     <!-- 返回顶部按钮 -->
     <back-top v-show="isShowBackTop" @click.native="backTop" />
+
+    <!-- 加入购物车 -->
+    <detail-add-cart ref="addCart" :sku="sku" />
   </div>
 </template>
 
@@ -62,6 +65,7 @@ import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
 import DetailRecommendInfo from './childComps/DetailRecommendInfo'
 import DetailBottom from './childComps/DetailBottom'
+import DetailAddCart from './childComps/DetailAddCart'
 
 export default {
   name: 'Detail',
@@ -76,7 +80,8 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     DetailRecommendInfo,
-    DetailBottom
+    DetailBottom,
+    DetailAddCart
   },
   data() {
     return {
@@ -89,7 +94,8 @@ export default {
       commentInfo: {}, // 评论信息
       recommends: [], // 推荐信息
       themeTopYs: [], // 每个组件的offsetTop
-      currentIndex: 0
+      currentIndex: 0,
+      sku: {}
     }
   },
   created() {
@@ -140,8 +146,9 @@ export default {
       // 加载成功，隐藏 mock
       this.$refs.mock.isMockShow = false
 
-      // 计算各部件的高度
-      this.initHeight()
+      // 配置购买栏的参数
+      this.$refs.addCart.goodsId = this.Id
+      this.handleConfigureTrading()
     },
     // 下拉加载更多
     handleLoadMore() {
@@ -186,6 +193,204 @@ export default {
     handleTabClick(index) {
       // 点击跳转至固定的高度
       this.$refs.scroll.scrollTo(this.themeTopYs[index])
+    },
+    // 监听底部点击事件
+    handleBottomClick() {
+      this.$refs.addCart.show = true
+    },
+    // 监听全部图片是否加载完成
+    handleImageLoad() {
+      console.log('所有图片全部加载完成')
+      this.initHeight()
+    },
+    // 处理 sku 参数
+    handleConfigureTrading() {
+      // 默认图片为轮播图的第一个图片
+      this.$refs.addCart.goods.picture = this.topImages[0]
+      // 如果就一种样式
+      if (this.topImages.length === 1) {
+        this.sku = {
+          tree: [
+            {
+              k: '样式分类', // skuKeyName：规格类目名称
+              v: [
+                {
+                  id: '1',
+                  name: '样式1',
+                  imgUrl: this.topImages[0],
+                  previewImgUrl: this.topImages[0]
+                }
+              ],
+              k_s: 's1'
+            },
+            {
+              k: '尺码', // skuKeyName：规格类目名称
+              v: [
+                {
+                  id: '0',
+                  name: 'S'
+                },
+                {
+                  id: '1',
+                  name: 'M'
+                },
+                {
+                  id: '2',
+                  name: 'L'
+                },
+                {
+                  id: '3',
+                  name: 'XL'
+                },
+                {
+                  id: '4',
+                  name: '2XL'
+                }
+              ],
+              k_s: 's2'
+            }
+          ],
+          list: [
+            // 样式1的
+            {
+              id: 1,
+              price: 8900,
+              s1: '1',
+              s2: '0',
+              stock_num: 50
+            },
+            {
+              id: 1,
+              price: 8900,
+              s1: '1',
+              s2: '1',
+              stock_num: 60
+            },
+            {
+              id: 1,
+              price: 9900,
+              s1: '1',
+              s2: '2',
+              stock_num: 70
+            },
+            {
+              id: 1,
+              price: 10900,
+              s1: '1',
+              s2: '3',
+              stock_num: 80
+            }
+          ],
+          price: '89.00 -109.00', // 默认价格（单位元）
+          stock_num: 260, // 商品总库存
+          hide_stock: false // 是否隐藏剩余库存
+        }
+      } else {
+        this.sku = {
+          tree: [
+            {
+              k: '样式分类', // skuKeyName：规格类目名称
+              v: [
+                {
+                  id: '1',
+                  name: '样式1',
+                  imgUrl: this.topImages[0],
+                  previewImgUrl: this.topImages[0]
+                },
+                {
+                  id: '2',
+                  name: '样式2',
+                  imgUrl: this.topImages[1],
+                  previewImgUrl: this.topImages[1]
+                }
+              ],
+              k_s: 's1'
+            },
+            {
+              k: '尺码', // skuKeyName：规格类目名称
+              v: [
+                {
+                  id: '0',
+                  name: 'S'
+                },
+                {
+                  id: '1',
+                  name: 'M'
+                },
+                {
+                  id: '2',
+                  name: 'L'
+                },
+                {
+                  id: '3',
+                  name: 'XL'
+                },
+                {
+                  id: '4',
+                  name: '2XL'
+                }
+              ],
+              k_s: 's2'
+            }
+          ],
+          list: [
+            // 样式1的
+            {
+              id: 1,
+              price: 8900,
+              s1: '1',
+              s2: '0',
+              stock_num: 50
+            },
+            {
+              id: 1,
+              price: 8900,
+              s1: '1',
+              s2: '1',
+              stock_num: 60
+            },
+            {
+              id: 1,
+              price: 9900,
+              s1: '1',
+              s2: '2',
+              stock_num: 70
+            },
+            {
+              id: 1,
+              price: 10900,
+              s1: '1',
+              s2: '3',
+              stock_num: 80
+            },
+            // 样式2的
+            {
+              id: 2,
+              price: 9900,
+              s1: '2',
+              s2: '1',
+              stock_num: 70
+            },
+            {
+              id: 2,
+              price: 9900,
+              s1: '2',
+              s2: '2',
+              stock_num: 80
+            },
+            {
+              id: 2,
+              price: 10900,
+              s1: '2',
+              s2: '3',
+              stock_num: 60
+            }
+          ],
+          price: '89.00 -109.00', // 默认价格（单位元）
+          stock_num: 470, // 商品总库存
+          hide_stock: false // 是否隐藏剩余库存
+        }
+      }
     }
   },
   mounted() {
