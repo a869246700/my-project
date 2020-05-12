@@ -26,7 +26,8 @@ import {
   Loading,
   GoodsAction,
   GoodsActionButton,
-  GoodsActionIcon
+  GoodsActionIcon,
+  Sku
 } from 'vant'
 
 Vue.use(Button)
@@ -58,6 +59,7 @@ Vue.use(Loading)
 Vue.use(GoodsAction)
 Vue.use(GoodsActionButton)
 Vue.use(GoodsActionIcon)
+Vue.use(Sku)
 
 Toast.setDefaultOptions({ duration: 1000 })
 Toast.setDefaultOptions('loading', { forbidClick: true })
