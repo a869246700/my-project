@@ -1,7 +1,7 @@
 <template>
   <van-grid-item @click="handleItemClick()">
     <div class="item">
-      <img v-lazy="showImg" />
+      <img v-lazy="showImg" @load="imgLoad"/>
       <div class="item-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">{{'￥' + goodsItem.price}}</span>
@@ -30,6 +30,10 @@ export default {
           id: this.goodsItem.iid
         }
       })
+    },
+    // 监听图片加载
+    imgLoad() {
+      this.$emit('imgLoad')
     }
   },
   computed: {

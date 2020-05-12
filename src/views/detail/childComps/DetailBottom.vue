@@ -9,8 +9,8 @@
         :color="starStyle.color"
         @click="handleClickStar"
       />
-      <van-goods-action-button type="warning" text="加入购物车" />
-      <van-goods-action-button type="danger" text="立即购买" />
+      <van-goods-action-button type="warning" text="加入购物车" @click="handleClickAddCart" />
+      <van-goods-action-button type="danger" text="立即购买" @click="handleClickAddCart"/>
     </van-goods-action>
   </div>
 </template>
@@ -44,6 +44,10 @@ export default {
         this.Toast('已取消收藏')
       }
       this.starStyle.isStar = !this.starStyle.isStar
+    },
+    // 点击购买和加入购物车
+    handleClickAddCart() {
+      this.$emit('addCart')
     }
   }
 }
@@ -56,6 +60,6 @@ export default {
   left: 0;
   right: 0;
   height: 49px;
-  z-index: 99999;
+  z-index: 999;
 }
 </style>

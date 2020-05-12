@@ -1,5 +1,6 @@
 <template>
   <div class="param-info" v-if="Object.keys(paramInfo).length !== 0">
+    <div class="title">参数列表</div>
     <table v-for="(table, index) in paramInfo.sizes" class="info-size" :key="index">
       <tr v-for="(tr, indey) in table" :key="indey">
         <td v-for="(td, indez) in tr" :key="indez">{{td}}</td>
@@ -31,40 +32,46 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .param-info {
   padding: 20px 15px;
   font-size: 14px;
   border-bottom: 5px solid #f2f5f8;
-}
 
-.param-info table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  .title {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
 
-.param-info table tr {
-  height: 42px;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-.param-info table tr td {
-  border-bottom: 1px solid rgba(100, 100, 100, 0.1);
-}
+    tr {
+      height: 42px;
 
-.info-param-key {
-  /*当value的数据量比较大的时候, 会挤到key,所以给一个固定的宽度*/
-  width: 95px;
-}
+      td {
+        border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+      }
+    }
+  }
 
-.info-param {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
+  .info-param {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 
-.param-value {
-  color: #eb4868;
-}
+    .info-param-key {
+      /*当value的数据量比较大的时候, 会挤到key,所以给一个固定的宽度*/
+      width: 95px;
+    }
 
-.info-img img {
-  width: 100%;
+    .param-value {
+      color: #eb4868;
+    }
+  }
+  .info-img img {
+    width: 100%;
+  }
 }
 </style>
