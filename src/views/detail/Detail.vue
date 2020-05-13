@@ -205,6 +205,9 @@ export default {
     },
     // 处理 sku 参数
     handleConfigureTrading() {
+      // 计算商品价格
+      const price = this.goods.lowNowPrice * 100
+      const oldPrice = (this.goods.oldPrice.substr(1) - 0) * 100
       // 默认图片为轮播图的第一个图片
       this.$refs.addCart.goods.picture = this.topImages[0]
       // 如果就一种样式
@@ -254,36 +257,34 @@ export default {
             // 样式1的
             {
               id: 1,
-              price: 8900,
+              price: price,
               s1: '1',
               s2: '0',
               stock_num: 50
             },
             {
               id: 1,
-              price: 8900,
+              price: price,
               s1: '1',
               s2: '1',
               stock_num: 60
             },
             {
               id: 1,
-              price: 9900,
+              price: price,
               s1: '1',
               s2: '2',
               stock_num: 70
             },
             {
               id: 1,
-              price: 10900,
+              price: oldPrice,
               s1: '1',
               s2: '3',
               stock_num: 80
             }
           ],
-          price: '89.00 -109.00', // 默认价格（单位元）
-          stock_num: 260, // 商品总库存
-          hide_stock: false // 是否隐藏剩余库存
+          stock_num: 260 // 商品总库存
         }
       } else {
         this.sku = {
@@ -337,28 +338,28 @@ export default {
             // 样式1的
             {
               id: 1,
-              price: 8900,
+              price: price,
               s1: '1',
               s2: '0',
               stock_num: 50
             },
             {
               id: 1,
-              price: 8900,
+              price: price,
               s1: '1',
               s2: '1',
               stock_num: 60
             },
             {
               id: 1,
-              price: 9900,
+              price: price,
               s1: '1',
               s2: '2',
               stock_num: 70
             },
             {
               id: 1,
-              price: 10900,
+              price: oldPrice,
               s1: '1',
               s2: '3',
               stock_num: 80
@@ -366,31 +367,31 @@ export default {
             // 样式2的
             {
               id: 2,
-              price: 9900,
+              price: oldPrice,
               s1: '2',
               s2: '1',
               stock_num: 70
             },
             {
               id: 2,
-              price: 9900,
+              price: price,
               s1: '2',
               s2: '2',
               stock_num: 80
             },
             {
               id: 2,
-              price: 10900,
+              price: oldPrice,
               s1: '2',
               s2: '3',
               stock_num: 60
             }
           ],
-          price: '89.00 -109.00', // 默认价格（单位元）
-          stock_num: 470, // 商品总库存
-          hide_stock: false // 是否隐藏剩余库存
+          stock_num: 470 // 商品总库存
         }
       }
+      this.sku.price = `${this.goods.lowNowPrice} - ${this.goods.oldPrice}` // 默认价格（单位元）
+      this.sku.hide_stock = false // 是否隐藏剩余库存
     }
   },
   mounted() {
