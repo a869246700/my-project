@@ -27,7 +27,10 @@ import {
   GoodsAction,
   GoodsActionButton,
   GoodsActionIcon,
-  Sku
+  Sku,
+  Form,
+  Field,
+  Image
 } from 'vant'
 
 Vue.use(Button)
@@ -60,6 +63,9 @@ Vue.use(GoodsAction)
 Vue.use(GoodsActionButton)
 Vue.use(GoodsActionIcon)
 Vue.use(Sku)
+Vue.use(Form)
+Vue.use(Field)
+Vue.use(Image)
 
 Toast.setDefaultOptions({ duration: 1000 })
 Toast.setDefaultOptions('loading', { forbidClick: true })

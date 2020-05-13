@@ -2,7 +2,7 @@
   <div>
     <van-overlay z-index="99999" :show="isMockShow">
       <div class="wrapper" @click.stop>
-        <van-loading size="24px" vertical>加载中...</van-loading>
+        <van-loading size="24px" vertical>{{content}}</van-loading>
       </div>
     </van-overlay>
   </div>
@@ -10,6 +10,12 @@
 <script>
 export default {
   name: 'Detail',
+  props: {
+    content: {
+      type: String,
+      default: '加载中...'
+    }
+  },
   data() {
     return {
       isMockShow: true

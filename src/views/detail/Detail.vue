@@ -200,7 +200,7 @@ export default {
     },
     // 监听全部图片是否加载完成
     handleImageLoad() {
-      console.log('所有图片全部加载完成')
+      // 计算每个 tabControl 项的高度
       this.initHeight()
     },
     // 处理 sku 参数
