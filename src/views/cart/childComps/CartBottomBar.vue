@@ -1,0 +1,66 @@
+<template>
+  <div>
+    <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
+      <check-button :ischecked="isSelectAll" @click.native="handleCheckAll" />
+    </van-submit-bar>
+  </div>
+</template>
+
+<script>
+import CheckButton from './CheckButton'
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'CartBottomBar',
+  components: {
+    CheckButton
+  },
+  methods: {
+    onSubmit() {
+      this.Toast.success('提交订单成功')
+    },
+    handleCheckAll() {
+      if (this.isSelectAll) {
+        //   全部选中的情况
+        this.cartList.forEach(item => (item.checked = false))
+        this.Toast('商品取消全选')
+      } else {
+        //   全部未选中 或者 部分未选中
+        this.cartList.forEach(item => (item.checked = true))
+        this.Toast('商品全选')
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(['cartList']),
+    // 总的 被checked 的价格
+    totalPrice() {
+      return (
+        this.cartList
+          .filter(item => {
+            return item.checked
+          })
+          .reduce((preValue, item) => {
+            return preValue + item.price * item.count
+          }, 0)
+          .toFixed(2) * 100
+      )
+    },
+    // 判断是否全选
+    isSelectAll() {
+      if (this.cartList.length === 0) return false
+      return this.cartList.every(item => item.checked)
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.van-submit-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  background: #f6f6f6;
+}
+</style>

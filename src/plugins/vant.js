@@ -30,7 +30,10 @@ import {
   Sku,
   Form,
   Field,
-  Image
+  Image,
+  Card,
+  SubmitBar,
+  Checkbox
 } from 'vant'
 
 Vue.use(Button)
@@ -66,6 +69,9 @@ Vue.use(Sku)
 Vue.use(Form)
 Vue.use(Field)
 Vue.use(Image)
+Vue.use(Card)
+Vue.use(SubmitBar)
+Vue.use(Checkbox)
 
 Toast.setDefaultOptions({ duration: 1000 })
 Toast.setDefaultOptions('loading', { forbidClick: true })

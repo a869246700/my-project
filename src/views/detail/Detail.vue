@@ -41,7 +41,7 @@
     <back-top v-show="isShowBackTop" @click.native="backTop" />
 
     <!-- 加入购物车 -->
-    <detail-add-cart ref="addCart" :sku="sku" />
+    <detail-add-cart ref="addCart" :sku="sku" @addCart="handleAddCart" />
   </div>
 </template>
 
@@ -66,6 +66,7 @@ import DetailCommentInfo from './childComps/DetailCommentInfo'
 import DetailRecommendInfo from './childComps/DetailRecommendInfo'
 import DetailBottom from './childComps/DetailBottom'
 import DetailAddCart from './childComps/DetailAddCart'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Detail',
@@ -103,6 +104,7 @@ export default {
     this.initGoodsInfo()
   },
   methods: {
+    ...mapActions(['addCart']),
     // 初始化商品信息
     async initGoodsInfo() {
       // 保存商品的 Id
@@ -127,10 +129,15 @@ export default {
       // 4. 商品详细信息
       this.detailInfo = res.result.detailInfo
       // 5. 商品参数信息
-      this.paramInfo = new GoodsParam(
-        res.result.itemParams.info,
-        res.result.itemParams.rule
-      )
+      if (res.result.itemParams.rule) {
+        this.paramInfo = new GoodsParam(
+          res.result.itemParams.info,
+          res.result.itemParams.rule
+        )
+      } else {
+        this.Toast.fail('商品参数信息不完整')
+        this.paramInfo = new GoodsParam(res.result.itemParams.info, {})
+      }
       // 6. 获取评论信息
       if (res.result.rate.cRate !== 0) {
         this.commentInfo = res.result.rate.list[0]
@@ -207,7 +214,12 @@ export default {
     handleConfigureTrading() {
       // 计算商品价格
       const price = this.goods.lowNowPrice * 100
-      const oldPrice = (this.goods.oldPrice.substr(1) - 0) * 100
+      let oldPrice = 0
+      if (this.goods.oldPrice === undefined) {
+        oldPrice = this.goods.lowNowPrice * 100
+      } else {
+        oldPrice = this.goods.oldPrice.slice(1) * 100
+      }
       // 默认图片为轮播图的第一个图片
       this.$refs.addCart.goods.picture = this.topImages[0]
       // 如果就一种样式
@@ -390,8 +402,32 @@ export default {
           stock_num: 470 // 商品总库存
         }
       }
-      this.sku.price = `${this.goods.lowNowPrice} - ${this.goods.oldPrice}` // 默认价格（单位元）
+      this.sku.price =
+        this.goods.oldPrice === undefined
+          ? `${this.goods.lowNowPrice}`
+          : `${this.goods.lowNowPrice} - ${this.goods.oldPrice.slice(1)}` // 默认价格（单位元）
       this.sku.hide_stock = false // 是否隐藏剩余库存
+    },
+    // 选择完购买商品属性后点击确定
+    handleAddCart() {
+      // 1. 获取购物车所需信息
+      const product = {}
+      product.id = this.Id
+      product.img = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.lowNowPrice
+      // 如果没有 oldPrice 这个属性
+      if (this.goods.oldPrice === undefined) {
+        product.oldPrice = null
+      } else {
+        product.oldPrice = this.goods.oldPrice.slice(1)
+      }
+
+      // 2. 将商品添加到购物车里
+      this.addCart(product).then(res => {
+        this.Toast.success('成功')
+      })
     }
   },
   mounted() {

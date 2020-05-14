@@ -35,7 +35,7 @@
         name="密码"
         label="密码"
         placeholder="请输入密码"
-        :left-icon="isPasswordShow ? 'eye' : 'closed-eye'"
+        :left-icon="isPasswordShow ? 'eye-o' : 'closed-eye'"
         @click-left-icon="isPasswordShow=!isPasswordShow"
         :rules="passwordRules"
       >

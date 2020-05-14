@@ -39,7 +39,7 @@ export default {
     // 点击加入购物车
     onAddCartClicked() {
       this.show = false
-      this.Toast.success('成功')
+      this.$emit('addCart')
     }
   }
 }
