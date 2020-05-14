@@ -147,7 +147,6 @@ export default {
 
 <style lang="less" scoped>
 #category {
-  background-color: #f1f1f1;
   height: 100vh;
   overflow: hidden;
 

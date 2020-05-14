@@ -138,8 +138,8 @@ export default {
     // 监听tabs点击切换
     handleTabClick(name) {
       this.currentType = name
-      if (this.goods[this.currentType].offsetTop <= 336) {
-        this.$refs.scroll.scrollTo(336)
+      if (this.goods[this.currentType].offsetTop <= this.$refs.tabcontrol.$el.offsetTop) {
+        this.$refs.scroll.scrollTo(this.$refs.tabcontrol.$el.offsetTop)
       } else {
         this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
       }
