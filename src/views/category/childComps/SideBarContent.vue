@@ -3,7 +3,7 @@
   <div class="content">
     <tab-control :tabs="tabControls" class="tab-control" @tabClick="handleTabClick" />
     <!-- 列表 -->
-    <scroll ref="scroll">
+    <scroll ref="scroll" class="scroll">
       <goods :goodsList="goodsList" />
     </scroll>
   </div>
@@ -49,9 +49,15 @@ export default {
   overflow: scroll;
 
   .tab-control {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    left: 90px;
+    right: 0;
+    top: 49px;
     z-index: 999;
+  }
+
+  .scroll {
+    margin-top: 44px;
   }
 }
 .content::-webkit-scrollbar {

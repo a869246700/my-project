@@ -32,6 +32,7 @@ export default {
 
 <style lang="less" scoped>
 .sidebar {
+  width: 90px;
   height: 100vh;
   overflow: auto;
 }
