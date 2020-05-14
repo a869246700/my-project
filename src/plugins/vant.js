@@ -33,7 +33,8 @@ import {
   Image,
   Card,
   SubmitBar,
-  Checkbox
+  Checkbox,
+  Dialog
 } from 'vant'
 
 Vue.use(Button)
@@ -76,3 +77,5 @@ Vue.use(Checkbox)
 Toast.setDefaultOptions({ duration: 1000 })
 Toast.setDefaultOptions('loading', { forbidClick: true })
 Vue.prototype.Toast = Toast
+
+Vue.prototype.Dialog = Dialog

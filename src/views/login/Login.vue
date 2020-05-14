@@ -92,7 +92,7 @@ export default {
       // 让登录中的动画显示
       this.isShow = true
       // 模拟后台生成 token
-      const token = +new Date()
+      const token = this.username + '$2020$' + +new Date()
       // 将 token 保存到 sessionStorage
       window.sessionStorage.setItem('token', token)
       // 模拟异步请求登录
@@ -121,6 +121,11 @@ export default {
     handlePasswordClear() {
       this.password = ''
     }
+  },
+  deactivated() {
+    // 重置表单，避免退出的时候 缓存内容
+    this.username = ''
+    this.password = ''
   }
 }
 </script>
