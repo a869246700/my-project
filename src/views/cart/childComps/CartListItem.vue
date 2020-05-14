@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'CartListItem',
   props: {
@@ -26,8 +28,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['changeCheck']),
     handleCheckClick() {
-      this.product.checked = !this.product.checked
+      this.changeCheck(this.product)
     }
   }
 }

@@ -37,9 +37,9 @@ export default {
   },
   methods: {
     // 点击加入购物车
-    onAddCartClicked() {
+    onAddCartClicked(skuData) {
       this.show = false
-      this.$emit('addCart')
+      this.$emit('addCart', skuData)
     }
   }
 }

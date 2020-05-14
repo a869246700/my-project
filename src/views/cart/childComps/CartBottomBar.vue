@@ -8,7 +8,7 @@
 
 <script>
 import CheckButton from './CheckButton'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'CartBottomBar',
@@ -16,17 +16,18 @@ export default {
     CheckButton
   },
   methods: {
+    ...mapActions(['changeAllCheck']),
     onSubmit() {
       this.Toast.success('提交订单成功')
     },
     handleCheckAll() {
       if (this.isSelectAll) {
         //   全部选中的情况
-        this.cartList.forEach(item => (item.checked = false))
+        this.changeAllCheck(true)
         this.Toast('商品取消全选')
       } else {
         //   全部未选中 或者 部分未选中
-        this.cartList.forEach(item => (item.checked = true))
+        this.changeAllCheck(false)
         this.Toast('商品全选')
       }
     }

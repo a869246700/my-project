@@ -1,8 +1,8 @@
 <template>
   <div class="bottom">
     <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
-      <van-goods-action-icon icon="shop-o" text="店铺" color="#ff5000" />
+      <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" @click="Toast('相关功能未开发')" />
+      <van-goods-action-icon icon="shop-o" text="店铺" color="#ff5000" @click="Toast('相关功能未开发')" />
       <van-goods-action-icon
         icon="star"
         :text="starStyle.text"

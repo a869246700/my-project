@@ -409,7 +409,7 @@ export default {
       this.sku.hide_stock = false // 是否隐藏剩余库存
     },
     // 选择完购买商品属性后点击确定
-    handleAddCart() {
+    handleAddCart(skuData) {
       // 1. 获取购物车所需信息
       const product = {}
       product.id = this.Id
@@ -417,13 +417,13 @@ export default {
       product.title = this.goods.title
       product.desc = this.goods.desc
       product.price = this.goods.lowNowPrice
+      product.count = skuData.selectedNum
       // 如果没有 oldPrice 这个属性
       if (this.goods.oldPrice === undefined) {
         product.oldPrice = null
       } else {
         product.oldPrice = this.goods.oldPrice.slice(1)
       }
-
       // 2. 将商品添加到购物车里
       this.addCart(product).then(res => {
         this.Toast.success('成功')
