@@ -1,12 +1,16 @@
 <template>
-  <van-checkbox v-model="ischecked">全选</van-checkbox>
+  <van-checkbox v-model="isChecked" :disabled="isDisabled">全选</van-checkbox>
 </template>
 
 <script>
 export default {
   name: 'CheckButton',
   props: {
-    ischecked: {
+    isChecked: {
+      type: Boolean,
+      default: true
+    },
+    isDisabled: {
       type: Boolean,
       default: true
     }

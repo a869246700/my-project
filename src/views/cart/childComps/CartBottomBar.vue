@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
-      <check-button :ischecked="isSelectAll" @click.native="handleCheckAll" />
+      <check-button :is-checked="isSelectAll" @click.native="handleCheckAll" :is-disabled="this.cartList.length === 0" />
     </van-submit-bar>
   </div>
 </template>
@@ -15,12 +15,19 @@ export default {
   components: {
     CheckButton
   },
+  data() {
+    return {
+    }
+  },
   methods: {
     ...mapActions(['changeAllCheck']),
     onSubmit() {
       this.Toast.success('提交订单成功')
     },
     handleCheckAll() {
+      if (this.cartList.length === 0) {
+        return this.Toast('购物车当前为空')
+      }
       if (this.isSelectAll) {
         //   全部选中的情况
         this.changeAllCheck(true)
@@ -62,6 +69,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 50px;
-  background: #f6f6f6;
+  background: #f0f0f0;
 }
 </style>

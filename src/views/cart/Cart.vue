@@ -6,7 +6,7 @@
     </nav-bar>
 
     <!-- 购物车列表 -->
-    <cart-list />
+    <cart-list class="cart-list" />
 
     <!-- 底部状态栏 -->
     <cart-bottom-bar />
@@ -39,6 +39,10 @@ export default {
   .title {
     font-size: 19px;
     color: #fff;
+  }
+
+  .cart-list {
+    margin-top: 49px;
   }
 }
 </style>

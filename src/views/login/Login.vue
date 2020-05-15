@@ -12,7 +12,7 @@
     <van-form @submit="onSubmit">
       <!-- 用户名输入框 -->
       <van-field
-        v-model="username"
+        v-model.trim="username"
         name="用户名"
         label="用户名"
         placeholder="请输入用户名"
@@ -30,7 +30,7 @@
       </van-field>
       <!-- 密码输入框 -->
       <van-field
-        v-model="password"
+        v-model.trim="password"
         :type="isPasswordShow ? 'text' : 'password'"
         name="密码"
         label="密码"
