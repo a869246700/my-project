@@ -1,67 +1,70 @@
 <template>
-  <van-pull-refresh v-model="refreshing" @refresh="onRefresh" loading-text="刷新中...">
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-      :immediate-check="false"
-    >
+  <div class="wrapper" ref="wrapper">
+    <div class="content">
       <slot></slot>
-    </van-list>
-  </van-pull-refresh>
+    </div>
+  </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+
 export default {
   name: 'Scroll',
   data() {
     return {
-      // 是否已加载完成
-      finished: false,
-      // 是否处于加载状态
-      loading: false,
-      refreshing: false,
-      scrollTop: 0
+      scroll
+    }
+  },
+  props: {
+    probeType: {
+      type: Number,
+      default: 1
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    // 加载
-    onLoad() {
-      if (this.$router.history.current.path === '/category') {
-        this.finished = true
-        this.loading = false
-      }
-      this.$emit('handleDataLoad')
+    scrollTo(x, y, time = 300) {
+      this.scroll && this.scroll.scrollTo(x, y, time)
     },
-    onScroll() {
-      this.scrollTop = document.documentElement.scrollTop
-      // 滚动给父元素触发滚动事件
-      this.$emit('onScroll', this.scrollTop)
+    finishPullUp() {
+      this.scroll && this.scroll.finishPullUp()
     },
-    // 跳转至对应的地方
-    scrollTo(target) {
-      // 切换scroll的初始高度
-      document.documentElement.scrollTop = target
+    refresh() {
+      this.scroll && this.scroll.refresh()
     },
-    // 下拉刷新
-    onRefresh() {
-      // 处于加载状态
-      this.loading = true
-      if (this.$router.history.current.path === '/category') {
-        setTimeout(() => {
-          this.refreshing = false
-        }, 1000)
-      }
-      // 触发重新刷新事件
-      this.$emit('handleRefresh')
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.onScroll)
+    // 1. 创建BScroll对象
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      probeType: this.probeType,
+      click: true,
+      pullUpLoad: this.pullUpLoad
+    })
+
+    // 2. 监听滚动的位置
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on('scroll', position => {
+        this.$emit('scroll', position)
+      })
+    }
+
+    // 3. 监听 scroll 的上啦加载更多
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        // 监听到滚动到底部
+        this.$emit('pullingUp')
+      })
+    }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 </style>

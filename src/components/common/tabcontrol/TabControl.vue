@@ -1,7 +1,15 @@
 <template>
-  <van-tabs v-model="activeIndex" border @click="handleTabClick">
-    <van-tab :title="item.title" v-for="(item, index) in tabs" :key="index" :name="item.name"></van-tab>
-  </van-tabs>
+  <van-row>
+    <van-col
+      :span="8"
+      :class="{active: index === activeIndex}"
+      v-for="(item, index) in tabs"
+      :key="index"
+      @click="handleTabClick(index)"
+    >
+      <span>{{item}}</span>
+    </van-col>
+  </van-row>
 </template>
 
 <script>
@@ -17,17 +25,34 @@ export default {
   },
   data() {
     return {
-      // 当前的选中 tab 名称
       activeIndex: 0
     }
   },
   methods: {
-    handleTabClick(name) {
-      this.$emit('tabClick', name)
+    handleTabClick(index) {
+      this.activeIndex = index
+      this.$emit('tabClick', index)
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.van-row {
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  background-color: #fff;
+
+  .van-col {
+    span {
+      padding: 10px;
+    }
+  }
+  .active {
+    span {
+      border-bottom: 2px solid #ee0a24;
+    }
+  }
+}
 </style>

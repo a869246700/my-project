@@ -5,7 +5,7 @@
       :key="index"
       @click="handleItemClick(item.title)"
     >
-      <img v-lazy="item.image" />
+      <img v-lazy="item.image" @load="imageLoad" />
       <span>{{item.title}}</span>
     </van-grid-item>
   </van-grid>
@@ -22,6 +22,11 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      isLoad: false
+    }
+  },
   methods: {
     handleItemClick(title) {
       this.Toast.loading({
@@ -29,6 +34,12 @@ export default {
         forbidClick: true,
         overlay: true
       })
+    },
+    imageLoad() {
+      if (!this.isLoad) {
+        this.isLoad = true
+        this.$emit('imageLoad')
+      }
     }
   }
 }

@@ -2,36 +2,37 @@
   <div id="detail">
     <!-- navbar -->
     <detail-nav-bar @tabClick="handleTabClick" ref="nav" />
+    <scroll ref="scroll" class="scroll" :probe-type="3" @scroll="handleScroll">
+      <van-pull-refresh v-model="isRefresh" @refresh="handleDownRefresh">
+        <!-- 商品轮播图 -->
+        <detail-swiper :imgs="topImages" />
 
-    <scroll
-      ref="scroll"
-      class="scroll"
-      @handleDataLoad="handleLoadMore"
-      @onScroll="handleScroll"
-      @handleRefresh="handleRefresh"
-    >
-      <!-- 商品轮播图 -->
-      <detail-swiper :imgs="topImages" />
+        <!-- 商品基本信息 -->
+        <detail-base-info :goods="goods" />
 
-      <!-- 商品基本信息 -->
-      <detail-base-info :goods="goods" />
+        <!-- 商家信息 -->
+        <detail-shop-info :shop="shop" />
 
-      <!-- 商家信息 -->
-      <detail-shop-info :shop="shop" />
+        <!-- 商品参数列表 -->
+        <detail-param-info :paramInfo="paramInfo" ref="params" />
 
-      <!-- 商品参数列表 -->
-      <detail-param-info :paramInfo="paramInfo" ref="params" />
+        <!-- 商品详细信息 -->
+        <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
 
-      <!-- 商品详细信息 -->
-      <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
+        <!-- 用户评论 -->
+        <detail-comment-info :comment-info="commentInfo" ref="comment" />
 
-      <!-- 用户评论 -->
-      <detail-comment-info :comment-info="commentInfo" ref="comment" />
-
-      <!-- 推荐商品 -->
-      <detail-recommend-info :recommends="recommends" ref="recommend" />
+        <van-list
+          loading-text="加载中"
+          finished-text="没有更多了"
+          v-model="isLoading"
+          :finished="isFinished"
+        >
+          <!-- 推荐商品 -->
+          <detail-recommend-info :recommends="recommends" ref="recommend" />
+        </van-list>
+      </van-pull-refresh>
     </scroll>
-
     <detail-bottom @addCart="handleBottomClick" />
 
     <!-- mock -->
@@ -46,16 +47,18 @@
 </template>
 
 <script>
-import Scroll from 'components/common/scroll/Scroll'
-import { MockMixin, backTopMixin } from 'common/mixin'
-// 请求
+// 混入
 import {
-  getDetail,
-  Goods,
-  Shop,
-  GoodsParam,
-  getRecommend
-} from 'network/detail'
+  MockMixin,
+  backTopMixin,
+  goodsItemImageListenerMixin
+} from 'common/mixin'
+// 请求
+import { getDetail, getRecommend } from 'network/detail'
+// 构造对象
+import { Goods, Shop, GoodsParam } from 'common/detail'
+// 组件
+import Scroll from 'components/common/scroll/Scroll'
 import DetailNavBar from './childComps/DetailNavBar'
 import DetailSwiper from './childComps/DetailSwiper'
 import DetailBaseInfo from './childComps/DetaiBaseInfo'
@@ -70,7 +73,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Detail',
-  mixins: [MockMixin, backTopMixin],
+  mixins: [MockMixin, backTopMixin, goodsItemImageListenerMixin],
   components: {
     Scroll,
     DetailNavBar,
@@ -96,7 +99,10 @@ export default {
       recommends: [], // 推荐信息
       themeTopYs: [], // 每个组件的offsetTop
       currentIndex: 0,
-      sku: {}
+      sku: {},
+      isRefresh: true,
+      isLoading: false,
+      isFinished: true
     }
   },
   created() {
@@ -163,16 +169,15 @@ export default {
       this.$refs.scroll.finished = true
     },
     // 滚动监听
-    handleScroll(y) {
-      // 当页面滚动高度超过 2000 显示 backtop 组件
-      this.showBackTop(y, 2000)
-
+    handleScroll(position) {
+      // 当页面滚动高度超过 1000 显示 backtop 组件
+      this.showBackTop(position, 1000)
       const length = this.themeTopYs.length
       for (let i = 0; i < length - 1; i++) {
         if (
           this.currentIndex !== i &&
-          y + 5 >= this.themeTopYs[i] &&
-          y + 5 < this.themeTopYs[i + 1]
+          -position.y + 5 >= this.themeTopYs[i] &&
+          -position.y + 5 < this.themeTopYs[i + 1]
         ) {
           this.currentIndex = i
           this.$refs.nav.active = this.currentIndex
@@ -180,9 +185,9 @@ export default {
       }
     },
     // 下拉刷新
-    handleRefresh() {
+    handleDownRefresh() {
       setTimeout(() => {
-        this.$refs.scroll.refreshing = false
+        this.isRefresh = false
       }, 1000)
     },
     // 计算组件在页面的高度
@@ -199,7 +204,7 @@ export default {
     // 顶部 Tab 点击事件
     handleTabClick(index) {
       // 点击跳转至固定的高度
-      this.$refs.scroll.scrollTo(this.themeTopYs[index])
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[index])
     },
     // 监听底部点击事件
     handleBottomClick() {
@@ -432,18 +437,21 @@ export default {
   },
   mounted() {
     // 进入页面时，防止首页滚动的高度对本页面进行干扰，进入组件时，置顶
-    this.$refs.scroll.scrollTo(0)
+    this.$refs.scroll.scrollTo(0, 0)
   }
 }
 </script>
 <style lang="less" scoped>
 #detail {
   position: relative;
-  background-color: #fff;
-  margin-bottom: 49px;
+  height: 100vh;
 
   .scroll {
-    margin-top: 49px;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
   }
 }
 </style>

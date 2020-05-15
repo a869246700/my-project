@@ -4,7 +4,16 @@
     <tab-control :tabs="tabControls" class="tab-control" @tabClick="handleTabClick" />
     <!-- 列表 -->
     <scroll ref="scroll" class="scroll">
-      <goods :goodsList="goodsList" />
+      <van-pull-refresh v-model="isRefresh" @refresh="handleDownRefresh">
+        <van-list
+          loading-text="加载中"
+          finished-text="没有更多了"
+          v-model="isLoading"
+          :finished="isFinished"
+        >
+          <goods :goodsList="goodsList" />
+        </van-list>
+      </van-pull-refresh>
     </scroll>
   </div>
 </template>
@@ -13,12 +22,12 @@
 import TabControl from 'components/common/tabcontrol/TabControl'
 import Scroll from 'components/common/scroll/Scroll'
 import Goods from 'components/common/goods/Goods'
+import { goodsItemImageListenerMixin } from 'common/mixin'
+
 export default {
   name: 'SideBarContent',
+  mixins: [goodsItemImageListenerMixin],
   components: { TabControl, Scroll, Goods },
-  data() {
-    return {}
-  },
   props: {
     tabControls: {
       type: Array,
@@ -33,10 +42,20 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      isRefresh: true,
+      isLoading: false,
+      isFinished: true
+    }
+  },
   methods: {
     // tab栏点击
     handleTabClick(name) {
       this.$emit('handleTabClick', name)
+    },
+    handleDownRefresh() {
+      setTimeout(() => (this.isRefresh = false), 1000)
     }
   }
 }
@@ -45,22 +64,19 @@ export default {
 <style lang="less" scoped>
 .content {
   flex: 1;
-  height: calc(100vh - 99px);
-  overflow: scroll;
-
-  .tab-control {
-    position: fixed;
-    left: 90px;
-    right: 0;
-    top: 49px;
-    z-index: 999;
-  }
-
-  .scroll {
-    margin-top: 44px;
-  }
 }
-.content::-webkit-scrollbar {
-  display: none;
+
+.tab-control {
+  position: fixed;
+  left: 90px;
+  right: 0;
+  top: 49px;
+  z-index: 999;
+}
+
+.scroll {
+  width: 100%;
+  height: calc(100vh - 147px);
+  margin-top: 44px;
 }
 </style>

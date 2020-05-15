@@ -18,7 +18,8 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  background-color: #f6f6f6;
+.wrapper {
+  height: 200px;
+  background-color: #0f0;
 }
 </style>

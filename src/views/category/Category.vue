@@ -12,7 +12,8 @@
       <side-bar-content
         :tabControls="tabControls"
         :goodsList="goodsList"
-        @handleTabClick="tabClick"
+        @handleTabClick="handleTabClick"
+        ref="content"
       />
     </div>
 
@@ -25,20 +26,21 @@
 import NavBar from 'components/common/navbar/NavBar'
 import SideBar from './childComps/SideBar'
 import SideBarContent from './childComps/SideBarContent'
-import { MockMixin } from 'common/mixin'
+import { MockMixin, tabControlMixin } from 'common/mixin'
 import {
   getCategory,
   getSubcategory,
   getCategoryDetail
 } from 'network/category'
-
-const POP = 'pop'
-const SELL = 'sell'
-const NEW = 'new'
+import {
+  POP,
+  NEW,
+  SELL
+} from 'common/const'
 
 export default {
   name: 'Category',
-  mixins: [MockMixin],
+  mixins: [MockMixin, tabControlMixin],
   components: {
     NavBar,
     SideBar,
@@ -49,14 +51,9 @@ export default {
       // 分类列表
       categroyList: [],
       // 导航条列表
-      tabControls: [
-        { title: '推荐', name: 'pop' },
-        { title: '精选', name: 'sell' },
-        { title: '最新', name: 'new' }
-      ],
+      tabControls: ['推荐', '精选', '最新'],
       // 每一个分类里的数据
       categoryData: {},
-      currentType: 'pop',
       currentIndex: -1
     }
   },
@@ -125,15 +122,14 @@ export default {
       // 4. 隐藏mock
       this.$refs.mock.isMockShow = false
     },
-    // 导航栏切换
-    tabClick(name) {
-      this.currentType = name
-    },
     // 侧边栏点击
     handleSideBarClick(index) {
       // 隐藏 mock
       this.$refs.mock.isMockShow = true
       this._getSubcategory(index)
+
+      // 商品列表回到顶部
+      this.$refs.content.$refs.scroll.scrollTo(0, 0)
     }
   },
   computed: {

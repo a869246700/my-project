@@ -1,7 +1,7 @@
 <template>
   <van-grid-item @click="handleItemClick()">
     <div class="item">
-      <img v-lazy="showImg" @load="imgLoad"/>
+      <van-image :src="showImg" lazy-load @load="imgLoad" :radius="5" />
       <div class="item-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">{{'￥' + goodsItem.price}}</span>
@@ -14,6 +14,7 @@
 <script>
 export default {
   name: 'GoodsItem',
+  inject: ['refresh'],
   props: {
     goodsItem: {
       type: Object,
@@ -33,7 +34,7 @@ export default {
     },
     // 监听图片加载
     imgLoad() {
-      this.$emit('imgLoad')
+      this.refresh()
     }
   },
   computed: {
@@ -56,7 +57,6 @@ export default {
 
 .item img {
   width: 100%;
-  margin-bottom: 10px;
   border-radius: 5px;
 }
 
@@ -66,7 +66,7 @@ export default {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin: 8px 0;
 }
 
 .price {

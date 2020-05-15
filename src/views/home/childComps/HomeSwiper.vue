@@ -2,7 +2,13 @@
   <!-- 轮播图 -->
   <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" :height="adaptHeight">
     <van-swipe-item v-for="(item, index) in imgs" :key="index">
-       <van-image  :height="adaptHeight" lazy-load :src="item.image" class="swiper-image" />
+      <van-image
+        :height="adaptHeight"
+        lazy-load
+        :src="item.image"
+        class="swiper-image"
+        @load="imageLoad"
+      />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -20,7 +26,16 @@ export default {
   },
   data() {
     return {
-      adaptHeight: 0
+      adaptHeight: 0,
+      isLoad: false
+    }
+  },
+  methods: {
+    imageLoad() {
+      if (!this.isLoad) {
+        this.isLoad = true
+        this.$emit('imageLoad')
+      }
     }
   },
   mounted() {

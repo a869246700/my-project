@@ -22,6 +22,9 @@ export default {
   methods: {
     ...mapActions(['changeAllCheck']),
     onSubmit() {
+      setTimeout(() => {
+        // 清理购物车
+      }, 800)
       this.Toast.success('提交订单成功')
     },
     handleCheckAll() {
