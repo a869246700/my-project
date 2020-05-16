@@ -1,7 +1,7 @@
 <template>
   <van-grid-item @click="handleItemClick()">
     <div class="item">
-      <van-image :src="showImg" lazy-load @load="imgLoad" :radius="5" />
+      <img v-lazy="showImg"  @load="imgLoad" />
       <div class="item-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">{{'￥' + goodsItem.price}}</span>

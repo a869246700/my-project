@@ -1,8 +1,6 @@
 import BackTop from 'components/content/backtop/BackTop'
 import Mock from 'components/content/mock/Mock'
-import {
-  debounce
-} from 'common/utils'
+
 import {
   POP,
   NEW,

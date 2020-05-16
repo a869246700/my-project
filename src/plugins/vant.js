@@ -15,7 +15,6 @@ import {
   Tab,
   Swipe,
   SwipeItem,
-  Lazyload,
   Grid,
   GridItem,
   Toast,
@@ -52,9 +51,6 @@ Vue.use(Tabs)
 Vue.use(Tab)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
-Vue.use(Lazyload, {
-  loading: require('assets/img/common/placeholder.jpg')
-})
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(PullRefresh)

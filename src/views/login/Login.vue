@@ -1,13 +1,6 @@
 <template>
   <div id="login">
-    <van-image
-      round
-      width="150"
-      height="150"
-      src="http://img.qqzhi.com/uploads/2018-12-22/122719846.jpg"
-      class="avatar"
-      lazy-load
-    />
+    <img v-lazy="avatar" class="avatar" />
     <!-- 表单验证 -->
     <van-form @submit="onSubmit">
       <!-- 用户名输入框 -->
@@ -66,6 +59,8 @@ export default {
   mixins: [MockMixin],
   data() {
     return {
+      // 头像地址
+      avatar: 'http://img.qqzhi.com/uploads/2018-12-22/122719846.jpg',
       // 动态绑定用户名
       username: '',
       // 动态绑定密码
@@ -143,6 +138,9 @@ export default {
   align-items: center;
 
   .avatar {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
     margin-bottom: 20px;
   }
 
