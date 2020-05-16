@@ -3,12 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'assets/css/global.css'
-import VueLazyload from 'vue-lazyload'
+import './plugins/vant.js'
 Vue.config.productionTip = false
-
-Vue.use(VueLazyload, {
-  loading: require('assets/img/common/placeholder.jpg')
-})
 
 new Vue({
   router,

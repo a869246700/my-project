@@ -29,11 +29,12 @@ import {
   Sku,
   Form,
   Field,
-  Image,
   Card,
   SubmitBar,
   Checkbox,
-  Dialog
+  Dialog,
+  Lazyload,
+  Image as VanImage
 } from 'vant'
 
 Vue.use(Button)
@@ -65,13 +66,20 @@ Vue.use(GoodsActionIcon)
 Vue.use(Sku)
 Vue.use(Form)
 Vue.use(Field)
-Vue.use(Image)
+Vue.use(VanImage)
 Vue.use(Card)
 Vue.use(SubmitBar)
 Vue.use(Checkbox)
+Vue.use(Lazyload, {
+  oading: require('assets/img/common/placeholder.jpg')
+})
 
-Toast.setDefaultOptions({ duration: 1000 })
-Toast.setDefaultOptions('loading', { forbidClick: true })
+Toast.setDefaultOptions({
+  duration: 1000
+})
+Toast.setDefaultOptions('loading', {
+  forbidClick: true
+})
 Vue.prototype.Toast = Toast
 
 Vue.prototype.Dialog = Dialog
