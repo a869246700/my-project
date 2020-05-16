@@ -156,9 +156,6 @@ export default {
       }
       this.recommends.push(...resp.data.data.list)
 
-      // 加载成功，隐藏 mock
-      this.$refs.mock.isMockShow = false
-
       // 配置购买栏的参数
       this.$refs.addCart.goodsId = this.Id
       this.handleConfigureTrading()
@@ -200,6 +197,9 @@ export default {
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
       // 添加一个占位
       this.themeTopYs.push(Number.MAX_VALUE)
+
+      // 加载成功，隐藏 mock
+      this.$refs.mock.isMockShow = false
     },
     // 顶部 Tab 点击事件
     handleTabClick(index) {
