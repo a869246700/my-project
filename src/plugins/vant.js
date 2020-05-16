@@ -71,7 +71,7 @@ Vue.use(Card)
 Vue.use(SubmitBar)
 Vue.use(Checkbox)
 Vue.use(Lazyload, {
-  oading: require('assets/img/common/placeholder.jpg')
+  loading: require('assets/img/common/placeholder.jpg')
 })
 
 Toast.setDefaultOptions({
