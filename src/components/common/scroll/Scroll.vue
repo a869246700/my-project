@@ -35,14 +35,17 @@ export default {
       this.$emit('handleDataLoad')
     },
     onScroll() {
-      this.scrollTop = document.documentElement.scrollTop
+      // 防止移动端拿不到 top 值
+      this.scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop
       // 滚动给父元素触发滚动事件
       this.$emit('onScroll', this.scrollTop)
     },
-    // 跳转至对应的地方
+    // 跳转高度
     scrollTo(target) {
-      // 切换scroll的初始高度
-      document.documentElement.scrollTop = target
+      window.scrollTo(0, target)
     },
     // 下拉刷新
     onRefresh() {

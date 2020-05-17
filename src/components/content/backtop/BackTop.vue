@@ -24,7 +24,7 @@ export default {
 
   span {
     font-size: 32px;
-    color: #ff5557;
+    color: var(--color-tint);
   }
 }
 </style>

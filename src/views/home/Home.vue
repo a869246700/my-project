@@ -44,7 +44,6 @@ import Search from 'components/common/search/Search'
 import TabControl from 'components/common/tabcontrol/TabControl'
 import Scroll from 'components/common/scroll/Scroll'
 import Goods from 'components/common/goods/Goods'
-import BackTop from 'components/content/backtop/BackTop'
 import HomeSwiper from './childComps/HomeSwiper'
 import HomeRecommend from './childComps/HomeRecommend'
 import { getHomeMultidata, getHomeGoods } from 'network/home'
@@ -58,7 +57,6 @@ export default {
     TabControl,
     Scroll,
     Goods,
-    BackTop,
     HomeSwiper,
     HomeRecommend
   },
@@ -98,7 +96,9 @@ export default {
       // 当前的 tab
       currentType: 'pop',
       // 离开时的
-      saveY: 0
+      saveY: 0,
+      // 是否记录了每个tab的高度
+      isRecode: false
     }
   },
   created() {
@@ -138,11 +138,14 @@ export default {
     // 监听tabs点击切换
     handleTabClick(name) {
       this.currentType = name
-      if (this.goods[this.currentType].offsetTop <= this.$refs.tabcontrol.$el.offsetTop) {
-        this.$refs.scroll.scrollTo(this.$refs.tabcontrol.$el.offsetTop)
-      } else {
-        this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
+      // 首次进入时判断是否已经记录了高度
+      if (!this.isRecode) {
+        this.isRecode = true
+        this.goods.pop.offsetTop = this.$refs.tabcontrol.$el.offsetTop
+        this.goods.new.offsetTop = this.$refs.tabcontrol.$el.offsetTop
+        this.goods.sell.offsetTop = this.$refs.tabcontrol.$el.offsetTop
       }
+      this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
     },
     // 加载当前类型的数据
     getCurrentTypeData() {

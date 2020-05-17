@@ -33,21 +33,19 @@ export function formatDate(date, fmt) {
 
 function padLeftZero(str) {
   return ('00' + str).substr(str.length)
-};
+}
 
-export function animate(obj, target, delay = 30, callback) {
-  clearInterval(obj.timer)
-  obj.timer = setInterval(function () {
-    // step 步长  每次移动的距离
-    let step = (target - obj.pageYOffset) / 2
-    step = step > 0 ? Math.ceil(step) : Math.floor(step)
-    // 当到达目标点 停止  清除定时器
-    if (obj.pageYOffset === target) {
-      clearInterval(obj.timer)
-      callback && callback()
+// 动画版返回顶部
+export function smoothScroll(timer) {
+  cancelAnimationFrame(timer)
+  timer = requestAnimationFrame(function fn() {
+    // 防止移动端拿不到 top 值
+    const oTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    if (oTop > 0) {
+      scrollTo(0, oTop - 500)
+      timer = requestAnimationFrame(fn)
     } else {
-      // 缓慢动画效果核心算法   (目标值-现在的位置)/10
-      window.scroll(0, obj.pageYOffset + step)
+      cancelAnimationFrame(timer)
     }
-  }, delay)
+  })
 }

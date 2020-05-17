@@ -1,6 +1,6 @@
 import BackTop from 'components/content/backtop/BackTop'
 import {
-  animate
+  smoothScroll
 } from './utils'
 import Mock from 'components/content/mock/Mock'
 
@@ -12,7 +12,8 @@ export const backTopMixin = {
   },
   methods: {
     backTop() {
-      animate(window, 0)
+      const timer = null
+      smoothScroll(timer)
     },
     showBackTop(position, Y) {
       this.isShowBackTop = position > Y
