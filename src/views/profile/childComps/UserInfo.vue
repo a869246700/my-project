@@ -3,16 +3,17 @@
     <div class="left">
       <slot name="user-picture">
         <van-image
-          src="http://img.qqzhi.com/uploads/2018-12-22/122719846.jpg"
+          :src="userInfo.avatar"
           class="user-picture"
           round
           lazy-load
+          @click="Toast(userInfo.username)"
         />
       </slot>
       <div class="user-login">
         <div class="user-nickname">
           <slot name="user-nickname">
-            <div>{{userNickName}}</div>
+            <div>{{userInfo.username}}</div>
           </slot>
         </div>
         <div class="user-phone">
@@ -26,16 +27,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'UserInfo',
-  data() {
-    return {
-      userNickName: ''
-    }
-  },
-  mounted() {
-    // 模拟获取用户登录名
-    this.userNickName = window.sessionStorage.getItem('token').split('$2020$')[0]
+  computed: {
+    ...mapState(['userInfo'])
   }
 }
 </script>

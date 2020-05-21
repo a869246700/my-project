@@ -7,7 +7,17 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-  cartList: []
+  cartList: [],
+  isLogin: false,
+  userInfo: {
+    username: '',
+    password: '',
+    avatar: '',
+    money: 999,
+    discountCouponNum: 5,
+    shoppingPoints: 300,
+    token: ''
+  }
 }
 
 const modules = {}

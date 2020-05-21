@@ -25,7 +25,27 @@ export default {
     state.cartList.forEach(item => (item.checked = true))
   },
   // 购物车中取消商品全选
-  [CANCEL_CHECK_ALL](state, payliad) {
+  [CANCEL_CHECK_ALL](state, payload) {
     state.cartList.forEach(item => (item.checked = false))
+  },
+  Login(state, payload) {
+    // 已经已登录，则返回
+    if (state.isLogin) return
+
+    // 记录登录信息
+    state.userInfo.username = payload.username
+    state.userInfo.password = payload.password
+    state.userInfo.avatar = payload.avatar
+    state.isLogin = true
+  },
+  Logout(state, payload) {
+    // 如果为登录，则返回
+    if (!state.isLogin) return
+
+    // 清除信息
+    state.userInfo.username = ''
+    state.userInfo.password = ''
+    state.userInfo.avatar = ''
+    state.isLogin = false
   }
 }

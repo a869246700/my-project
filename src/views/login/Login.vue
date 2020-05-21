@@ -4,12 +4,12 @@
       round
       width="150"
       height="150"
-      src="http://img.qqzhi.com/uploads/2018-12-22/122719846.jpg"
+      :src="avatar"
       class="avatar"
       lazy-load
     />
     <!-- 表单验证 -->
-    <van-form @submit="onSubmit">
+    <van-form @submit="onSubmit" ref="form">
       <!-- 用户名输入框 -->
       <van-field
         v-model="username"
@@ -53,6 +53,10 @@
       </div>
     </van-form>
 
+    <div>
+      <span class="backTo" @click="handleBackToPrevious">点击返回上一级</span>
+    </div>
+
     <!-- mock -->
     <mock ref="mock" content="登录中..." v-if="isShow" />
   </div>
@@ -60,6 +64,7 @@
 
 <script>
 import { MockMixin } from 'common/mixin'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
@@ -70,6 +75,8 @@ export default {
       username: '',
       // 动态绑定密码
       password: '',
+      // 模拟头像地址
+      avatar: 'http://img.qqzhi.com/uploads/2018-12-22/122719846.jpg',
       // 密码是否可见
       isPasswordShow: false,
       // 登录动画显示隐藏
@@ -87,12 +94,21 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['Login']),
     // 点击登录
     onSubmit(values) {
       // 让登录中的动画显示
       this.isShow = true
       // 模拟后台生成 token
       const token = this.username + '$2020$' + +new Date()
+      // 用户信息保存
+      const userInfo = {
+        username: this.username,
+        password: this.password,
+        avatar: this.avatar,
+        token: token
+      }
+      this.Login(userInfo)
       // 将 token 保存到 sessionStorage
       window.sessionStorage.setItem('token', token)
       // 模拟异步请求登录
@@ -100,7 +116,7 @@ export default {
         this.isShow = false
 
         // 跳转到主页
-        this.$router.push('/home')
+        this.$router.push('/profile')
       }, 1500)
     },
     // 用户名自定义检验方法
@@ -120,6 +136,13 @@ export default {
     // 点击清空密码
     handlePasswordClear() {
       this.password = ''
+    },
+    // 点击返回上一级
+    handleBackToPrevious() {
+      // 重置表单校验信息
+      this.$refs.form.resetValidation()
+      // 跳转至上一级
+      this.$router.go(-1)
     }
   },
   deactivated() {
@@ -148,6 +171,11 @@ export default {
 
   .login-btn {
     margin: 50px 80px;
+  }
+
+  .backTo {
+    font-size: 12px;
+    color: dodgerblue;
   }
 }
 </style>

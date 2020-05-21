@@ -2,7 +2,9 @@
   <div id="home">
     <!-- 头部框 -->
     <nav-bar>
-      <search />
+      <template #center>
+        <search />
+      </template>
     </nav-bar>
 
     <!-- 滚动框 -->

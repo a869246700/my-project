@@ -2,7 +2,9 @@
   <div id="cart">
     <!-- 顶部栏 -->
     <nav-bar>
-      <span class="title">购物车{{'(' + length + ')'}}</span>
+      <template #center>
+        <span class="title">购物车{{'(' + length + ')'}}</span>
+      </template>
     </nav-bar>
 
     <!-- 购物车列表 -->

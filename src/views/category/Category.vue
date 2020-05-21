@@ -2,7 +2,9 @@
   <div id="category">
     <!-- 导航栏 -->
     <nav-bar>
-      <span class="title">商品分类</span>
+      <template #center>
+         <span class="title">商品分类</span>
+      </template>
     </nav-bar>
     <div class="wrapper">
       <!-- 侧边栏 -->

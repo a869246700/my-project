@@ -1,9 +1,7 @@
 <template>
   <div id="profile">
     <!-- 顶部标题 -->
-    <nav-bar>
-      <span class="title">个人中心</span>
-    </nav-bar>
+    <profile-nav-bar />
 
     <!-- 用户信息栏 -->
     <user-info />
@@ -18,7 +16,7 @@
 </template>
 
 <script>
-import NavBar from 'components/common/navbar/NavBar'
+import ProfileNavBar from './childComps/ProfileNavBar'
 import UserInfo from './childComps/UserInfo'
 import UserWallet from './childComps/UserWallet'
 import ListView from './childComps/ListView'
@@ -26,7 +24,7 @@ import ListView from './childComps/ListView'
 export default {
   name: 'Profle',
   components: {
-    NavBar,
+    ProfileNavBar,
     UserInfo,
     ListView,
     UserWallet
@@ -53,11 +51,6 @@ export default {
 <style lang="less" scoped>
 #profile {
   margin-bottom: 50px;
-
-  .title {
-    font-size: 19px;
-    color: #fff;
-  }
 
   .order-list,
   .service-list {

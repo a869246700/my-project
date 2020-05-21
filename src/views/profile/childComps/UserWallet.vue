@@ -1,20 +1,20 @@
 <template>
-  <van-row class="account">
+  <van-row class="account" v-if="userInfo.username">
     <van-col :span="8" class="account-item">
       <div class="number">
-        <span class="balance">29.00</span>元
+        <span class="balance">{{userInfo.money}}</span>元
         <div class="account-info">我的余额</div>
       </div>
     </van-col>
     <van-col :span="8" class="account-item">
       <div class="number">
-        <span class="balance">6</span>个
+        <span class="balance">{{userInfo.discountCouponNum}}</span>个
       </div>
       <div class="account-info">我的优惠</div>
     </van-col>
     <van-col :span="8" class="account-item">
       <div class="number">
-        <span class="balance">999</span>分
+        <span class="balance">{{userInfo.shoppingPoints}}</span>分
       </div>
       <div class="account-info">我的积分</div>
     </van-col>
@@ -22,8 +22,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'UserWallet'
+  name: 'UserWallet',
+  computed: {
+    ...mapState(['userInfo'])
+  }
 }
 </script>
 
