@@ -156,6 +156,7 @@ export default {
       // 配置购买栏的参数
       this.$refs.addCart.goodsId = this.Id
       this.handleConfigureTrading()
+      console.log(this.sku)
     },
     // 下拉加载更多
     handleLoadMore() {
@@ -228,6 +229,7 @@ export default {
       }
       // 默认图片为轮播图的第一个图片
       this.$refs.addCart.goods.picture = this.topImages[0]
+
       // 如果就一种样式
       if (this.topImages.length === 1) {
         this.sku = {

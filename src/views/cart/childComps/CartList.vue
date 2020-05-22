@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-list">
+  <div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <!-- 商品列表 -->
       <cart-list-item v-for="(item, index) in cartList" :key="index" :product="item" />
@@ -36,10 +36,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.cart-list {
-  margin-top: 49px;
-  margin-bottom: 100px;
-  height: calc(100vh - 50px - 49px - 50px);
-  overflow: auto;
-}
 </style>

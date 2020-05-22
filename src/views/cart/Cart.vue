@@ -8,7 +8,7 @@
     </nav-bar>
 
     <!-- 购物车列表 -->
-    <cart-list />
+    <cart-list class="cart-list" />
 
     <!-- 底部状态栏 -->
     <cart-bottom-bar />
@@ -32,6 +32,9 @@ export default {
     ...mapGetters({
       length: 'cartLength'
     })
+  },
+  activated() {
+    window.scrollTo(0, 0)
   }
 }
 </script>
@@ -41,6 +44,10 @@ export default {
   .title {
     font-size: 19px;
     color: #fff;
+  }
+
+  .cart-list {
+    margin-top: 49px;
   }
 }
 </style>
