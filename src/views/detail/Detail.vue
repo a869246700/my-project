@@ -203,7 +203,15 @@ export default {
     },
     // 监听底部点击事件
     handleBottomClick() {
-      this.$refs.addCart.show = true
+      // 加入购物车或者购买时，需要先登录
+      const token = window.localStorage.getItem('token')
+
+      // 如果没有登录则不显示加入购物车，而是跳转去登录
+      if (!token) {
+        this.$router.push('/login')
+      } else {
+        this.$refs.addCart.show = true
+      }
     },
     // 监听全部图片是否加载完成
     handleImageLoad() {

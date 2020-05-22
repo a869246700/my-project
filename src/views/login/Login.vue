@@ -1,13 +1,6 @@
 <template>
   <div id="login">
-    <van-image
-      round
-      width="150"
-      height="150"
-      :src="avatar"
-      class="avatar"
-      lazy-load
-    />
+    <van-image round width="150" height="150" :src="avatar" class="avatar" lazy-load />
     <!-- 表单验证 -->
     <van-form @submit="onSubmit" ref="form">
       <!-- 用户名输入框 -->
@@ -58,7 +51,7 @@
     </div>
 
     <!-- mock -->
-    <mock ref="mock" content="登录中..." v-if="isShow" />
+    <mock ref="mock" :content="mockContent" v-if="isShow" />
   </div>
 </template>
 
@@ -90,7 +83,9 @@ export default {
       passwordRules: [
         { required: true, message: '请填写密码' },
         { validator: this.passwordValidator, message: '长度在 6 到 15 个字符' }
-      ]
+      ],
+      // mock 的提示信息
+      mockContent: '登录中...'
     }
   },
   methods: {
@@ -139,16 +134,15 @@ export default {
     },
     // 点击返回上一级
     handleBackToPrevious() {
-      // 重置表单校验信息
-      this.$refs.form.resetValidation()
       // 跳转至上一级
       this.$router.go(-1)
     }
   },
   deactivated() {
-    // 重置表单，避免退出的时候 缓存内容
-    this.username = ''
-    this.password = ''
+    // 重置表单校验信息
+    this.$refs.form.resetValidation()
+    // 密码设为不可见
+    this.isPasswordShow = false
   }
 }
 </script>

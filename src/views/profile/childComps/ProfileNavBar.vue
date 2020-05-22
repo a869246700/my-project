@@ -30,8 +30,9 @@ export default {
         title: '确认退出'
       })
         .then(() => {
-          this.Logout()
+          // 删除本地的 token
           window.sessionStorage.removeItem('token')
+          this.Logout()
         })
         .catch(() => {
           this.Toast('取消退出')
