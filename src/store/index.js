@@ -9,15 +9,7 @@ Vue.use(Vuex)
 const state = {
   cartList: [],
   isLogin: false,
-  userInfo: {
-    username: '',
-    password: '',
-    avatar: '',
-    money: 999,
-    discountCouponNum: 5,
-    shoppingPoints: 300,
-    token: ''
-  }
+  userInfo: {}
 }
 
 const modules = {}

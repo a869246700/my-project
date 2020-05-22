@@ -66,7 +66,7 @@ import DetailCommentInfo from './childComps/DetailCommentInfo'
 import DetailRecommendInfo from './childComps/DetailRecommendInfo'
 import DetailBottom from './childComps/DetailBottom'
 import DetailAddCart from './childComps/DetailAddCart'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Detail',
@@ -204,13 +204,11 @@ export default {
     // 监听底部点击事件
     handleBottomClick() {
       // 加入购物车或者购买时，需要先登录
-      const token = window.localStorage.getItem('token')
-
       // 如果没有登录则不显示加入购物车，而是跳转去登录
-      if (!token) {
-        this.$router.push('/login')
-      } else {
+      if (this.isLogin) {
         this.$refs.addCart.show = true
+      } else {
+        this.$router.push('/login')
       }
     },
     // 监听全部图片是否加载完成
@@ -437,6 +435,9 @@ export default {
         this.Toast.success('成功')
       })
     }
+  },
+  computed: {
+    ...mapGetters(['isLogin'])
   },
   mounted() {
     // 进入页面时，防止首页滚动的高度对本页面进行干扰，进入组件时，置顶

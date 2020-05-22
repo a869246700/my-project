@@ -3,7 +3,10 @@ import {
   ADD_TO_CART,
   CHANGE_PRPDUCT_CHECK_STATUS,
   CHECK_ALL,
-  CANCEL_CHECK_ALL
+  CANCEL_CHECK_ALL,
+  REMOVE_CHECKED_ALL,
+  LOGIN,
+  LOGOUT
 } from './mutation-types'
 
 export default {
@@ -49,5 +52,20 @@ export default {
       // 如果未被全部选中,则执行全部选中
       commit(CHECK_ALL)
     }
+  },
+  // 移除选中的商品
+  removeAllChecked({
+    state,
+    commit
+  }, payload) {
+    commit(REMOVE_CHECKED_ALL)
+  },
+  // 登录
+  login({ state, commit }, payload) {
+    commit(LOGIN, payload)
+  },
+  // 注销
+  logout({ state, commit }, payload) {
+    commit(LOGOUT, payload)
   }
 }

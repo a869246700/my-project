@@ -13,14 +13,14 @@
 <script>
 import NavBar from 'components/common/navbar/NavBar'
 
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ProfileNavBar',
   components: {
     NavBar
   },
   methods: {
-    ...mapMutations(['Logout']),
+    ...mapActions(['logout']),
     // 点击前往登录
     hanleClickToLogin() {
       this.$router.push('login')
@@ -32,7 +32,7 @@ export default {
         .then(() => {
           // 删除本地的 token
           window.sessionStorage.removeItem('token')
-          this.Logout()
+          this.logout()
         })
         .catch(() => {
           this.Toast('取消退出')

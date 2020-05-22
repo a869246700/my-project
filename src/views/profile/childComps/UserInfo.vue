@@ -6,7 +6,6 @@
           :src="userInfo.avatar"
           class="user-picture"
           round
-          lazy-load
           @click="Toast(userInfo.username)"
         />
       </slot>

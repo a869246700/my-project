@@ -57,7 +57,7 @@
 
 <script>
 import { MockMixin } from 'common/mixin'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -89,28 +89,34 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['Login']),
+    ...mapActions(['login']),
     // 点击登录
     onSubmit(values) {
-      // 让登录中的动画显示
+      // 1. 让登录中的动画显示
       this.isShow = true
-      // 模拟后台生成 token
+      // 2. 模拟后台生成 token
       const token = this.username + '$2020$' + +new Date()
-      // 用户信息保存
+      // 3. 用户信息保存
       const userInfo = {
         username: this.username,
         password: this.password,
         avatar: this.avatar,
+        money: 999,
+        discountCouponNum: 5,
+        shoppingPoints: 300,
         token: token
       }
-      this.Login(userInfo)
-      // 将 token 保存到 sessionStorage
+      this.login(userInfo)
+
+      // 4. 将 token 保存到 sessionStorage
+
       window.sessionStorage.setItem('token', token)
-      // 模拟异步请求登录
+
+      // 5. 模拟异步请求登录
       setTimeout(() => {
         this.isShow = false
 
-        // 跳转到主页
+        // 6. 跳转到主页
         this.$router.push('/profile')
       }, 1500)
     },

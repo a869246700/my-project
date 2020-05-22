@@ -8,3 +8,8 @@ export const CHANGE_PRPDUCT_CHECK_STATUS = 'change_product_check_status'
 export const CHECK_ALL = 'check_all'
 // 取消选中全部
 export const CANCEL_CHECK_ALL = 'cancel_check_all'
+// 移除选中商品
+export const REMOVE_CHECKED_ALL = 'remove_checked_all'
+// 登录注销
+export const LOGIN = 'login'
+export const LOGOUT = 'logout'

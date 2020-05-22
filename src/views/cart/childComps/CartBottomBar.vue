@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
-      <check-button :ischecked="isSelectAll" @click.native="handleCheckAll" />
+      <check-button :is-checked="isSelectAll" :is-disabled="isExist" @click.native="handleCheckAll" />
     </van-submit-bar>
   </div>
 </template>
@@ -16,11 +16,23 @@ export default {
     CheckButton
   },
   methods: {
-    ...mapActions(['changeAllCheck']),
+    ...mapActions(['changeAllCheck', 'removeAllChecked']),
     onSubmit() {
+      // 1. 如果没有商品 或者 没有商品被选中，直接返回
+      // 1.1 没有商品
+      if (this.isExist) return this.Toast.fail('购物车没有商品')
+      // 1.2 没有商品选中
+      if (this.isExistChecked) return this.Toast.fail('没有选中商品')
+
+      // 2. 移除被选中的商品
+      this.removeAllChecked()
+
+      // 3. 提示成功
       this.Toast.success('提交订单成功')
     },
     handleCheckAll() {
+      if (this.isExist) return
+
       if (this.isSelectAll) {
         //   全部选中的情况
         this.changeAllCheck(true)
@@ -33,7 +45,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['cartList']),
+    ...mapGetters(['cartList', 'cartLength', 'isExistChecked']),
+    // 判断购物车是否有东西
+    isExist() {
+      return this.cartLength === 0
+    },
     // 总的 被checked 的价格
     totalPrice() {
       return (
