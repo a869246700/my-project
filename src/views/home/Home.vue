@@ -176,6 +176,7 @@ export default {
     }
   },
   activated() {
+    console.log('Home activated')
     this.$refs.scroll.scrollTo(this.saveY)
   },
   deactivated() {
