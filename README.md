@@ -16,8 +16,6 @@ npm run build
 npm run lint
 ```
 
-
-
 ## 二、整体内容
 
 ### 一、项目结构
@@ -26,8 +24,6 @@ npm run lint
 * 采用底部 TabBar 路由导航栏，点击跳转至不同的路由页面，目前页面有 Home、Category、Detail、Cart、Profile、Login 页面
 * 请求数据来源于 coderwhy 
 * [项目演示地址](http://goo.codergoo.cn)
-
-
 
 ### 二、 首页-home
 
@@ -61,16 +57,21 @@ npm run lint
      2. 第二个 TabControl 组件直接放在滚动视图里**绑定一个ref**。
      
      3. 在主页的Dom对象挂载完后，在生命函数 Mounted中 ，计算得到第二个 TabControl 组件的离顶高度。
+
   
+
      4. 通过 Scroll 滚动视图的 Scroll滚动事件，当滚动高度大于第二个 TabControl 组件的离顶高度时，将 第一个 TabControl 组件显示出来，滚动高度小于第二个 TabControl 组件的离顶高度，则隐藏。
      
      5. 因为使用了两个 TabControl 组件，不同的 TabControl 组件点击后的 active 是不同的，所以我们要在 handleTabControlClick 方法里，实现两个 TabControl 组件的 active 一致。
      
         
+
   
+
 * 使用混入 Mixin
   + 返回顶部  BackTop：该组件是用于显示返回顶部按钮的，当页面的高度超过某个高度，我们就可以让该组件在页面上的右下角显示，点击则可以返回页面的顶部
   + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
+
   
   
 
@@ -82,7 +83,6 @@ npm run lint
 
   + 将 Category 界面的高度设置为100vh
 
-
 ``` css
     #category {
         height: 100vh;
@@ -92,7 +92,6 @@ npm run lint
 ```
 
   + 将 SideBar 和 SideBarContent 的高度设置为 100vh - NavBar - TabBar 的高度
-
 
 ``` css
     .side-bar {
@@ -125,11 +124,8 @@ npm run lint
   + 分页导航栏  TabControl
   + 商品列表  Goods
 
-
 * 使用混入 Mixin
   + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
-
-
 
 ### 四、购物车-Cart
 
@@ -139,11 +135,17 @@ npm run lint
 
 * 顶部 NavBar
   + left：自定义Icon
+
   
-+ center：文本 "购物车(当前加入购物车的内容)"
+
+* center：文本 "购物车(当前加入购物车的内容)"
+
   
+
     
+
   
+
 * 购物车列表 CartList
 
   
@@ -153,41 +155,55 @@ npm run lint
   + 选中商品的价格显示
   + 购买按钮：1. 列表为空时点击，会提示     2. 没有选中商品点击时，会提示
 
-
-
 ### 五、个人中心
 
 本界面主要是显示用户个人信息，例如钱包中心、一些服务中心等等
 
 * 顶部 ProfileNavBar
   + left：自定义Icon
+
   
+
   + center：文本 "个人中心"
 
   + right： 登入注销
+
   
+
     
+
   
+
 * 用户信息栏 UserInfo
+
   
-+ 展示用户头像、用户账号名、用户的手机号等等
+
+* 展示用户头像、用户账号名、用户的手机号等等
+
   
+
     
+
   
+
 * 用户钱包栏 UserWallet
+
   
-+ 包含钱包余额、优惠券、积分等
+
+* 包含钱包余额、优惠券、积分等
+
   
+
     
+
   
+
 * 服务中心栏 ListView
   + 展示各种专属用用户的服务内容
     - 我的收藏
     - 我的客服
     - 我的会员
     - ...
-
-
 
 ### 六、登录-Login
 
@@ -201,15 +217,21 @@ npm run lint
   + 登录按钮
 
 * 返回上一级按钮
-  
-+ 点击返回之前的页面
-  
-* 使用混入 Mixin
-  
-  + 加载组件  Mock：登陆时显示，在获取到登陆请求数据后隐藏
-  
+
   
 
+* 点击返回之前的页面
+
+  
+
+* 使用混入 Mixin
+
+  
+
+  + 加载组件  Mock：登陆时显示，在获取到登陆请求数据后隐藏
+
+  
+  
 
 ### 七、商品详情页面-Detail
 
@@ -219,53 +241,80 @@ npm run lint
   + left：返回上一级按钮
   + center：独立的 TabControl 导航组件
     - 用于用户点击跳转至页面不同位置，
+
     
-  - 当页面滚动到指定的位置时，tabcontrol 当前的选中会不同
+
+  + 当页面滚动到指定的位置时，tabcontrol 当前的选中会不同
+
     
+
       
   
+
 * 滚动视图 Scroll
   + 商品轮播图 DetailSwiper
+
   
+
   + 商品基本信息 DetaiBaseInfo
+
   
+
   + 商家信息 DetailShopInfo
+
   
+
   + 用户评论 DetailCommentInfo
 
   + 商品参数 DetailParamInfo
+
   
+
   + 商品详细信息，图片等 DetailGoodsInfo
+
   
+
   + 推荐商品 DetailRecommendInfo
+
   
+
     
+
   
+
 * 底部栏 DetailBottom
   + 客服
+
   
+
   + 店铺
+
   
+
   + 收藏
 
   + 加入购物车：点击，没有登录会跳转至登录界面
+
   
+
   + 立即购买：点击，没有登录会跳转至登录界面
+
   
+
     
+
   
+
 * 加入购物车页面 DetailAddCart
   + 使用的是 vantUI 封装的 sku 组件
   + 先设置隐藏，当点击加入购物车或者立即购买时显示
-  
-  
 
+  
+  
 
 * 使用混入 Mixin
   + 返回顶部  BackTop：该组件是用于显示返回顶部按钮的，当页面的高度超过某个高度，我们就可以让该组件在页面上的右下角显示，点击则可以返回页面的顶部
   + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
-
-
 
 ## 三、 项目优化
 
@@ -275,7 +324,9 @@ npm run lint
 
 1. 安装 babel-plugin-transform-remove-console
 
-   ```shell
+   
+
+``` shell
    npm install babel-plugin-transform-remove-console --save-dev
    ```
 
@@ -283,106 +334,102 @@ npm run lint
 
 2. 在项目中的 babel.config.js 文化中中配置 transform-remove-console, 但是在 babel.config.js 中配置，不仅在运行时生效，也在开发时生效
 
-   ```javascript
+   
+
+``` javascript
    module.exports = {
-     presets: [
-       '@vue/cli-plugin-babel/preset'
-     ],
-     plugins: [
-       [
-         'import',
-         {
-           libraryName: 'vant',
-           libraryDirectory: 'es',
-           style: true
-         },
-         'vant'
+       presets: [
+           '@vue/cli-plugin-babel/preset'
        ],
-       'transform-remove-console'
-     ]
+       plugins: [
+           [
+               'import',
+               {
+                   libraryName: 'vant',
+                   libraryDirectory: 'es',
+                   style: true
+               },
+               'vant'
+           ],
+           'transform-remove-console'
+       ]
    }
-   ```
+```
 
    
 
 * 注意事项：配置完后，需要在重新 serve 项目后，再使用 build 打包项目
 
-
-
 3. 我们要对其进行优化，判断运行时的 mode 的值，判断是开发还是运行阶段
 
-   ```javascript
+   
+
+``` javascript
    // 这里是项目发布阶段需要用到的 babel 插件
    const prodPlugins = []
-   
+
    if (process.env.NODE_ENV === 'production') {
-     prodPlugins.push('transform-remove-console')
+       prodPlugins.push('transform-remove-console')
    }
-   
+
    module.exports = {
-     presets: [
-       '@vue/cli-plugin-babel/preset'
-     ],
-     plugins: [
-       [
-         'import',
-         {
-           libraryName: 'vant',
-           libraryDirectory: 'es',
-           style: true
-         },
-         'vant'
+       presets: [
+           '@vue/cli-plugin-babel/preset'
        ],
-       // 发布产品时候的插件数组
-       ...prodPlugins
-     ]
+       plugins: [
+           [
+               'import',
+               {
+                   libraryName: 'vant',
+                   libraryDirectory: 'es',
+                   style: true
+               },
+               'vant'
+           ],
+           // 发布产品时候的插件数组
+           ...prodPlugins
+       ]
    }
-   
-   ```
-
-
+```
 
 ### 2. 为开发模式与发布模式指定不同的打包入口
 
-+ 开发模式的入口文件为：src/main-dev.js
+* 开发模式的入口文件为：src/main-dev.js
 
-+ 发布模式的入口文件为：src/main.prod.js
+* 发布模式的入口文件为：src/main.prod.js
 
   
 
 通过在 vue.config.js 文件中，配置 chainWebpack 或者 configureWebpack 来规定，打包的入口文件
 
-```javascript
+``` javascript
 module.exports = {
-  chainWebpack: config => {
-    config.when(process.env.NODE_ENV === 'production', config => {
-      config.entry('app').clear().add('./src/main-prod.js')
-    })
-    config.when(process.env.NODE_ENV === 'development', config => {
-      config.entry('app').clear().add('./src/main-dev.js')
-    })
-  },
-  configureWebpack: {
-    resolve: {
-      alias: {
-        assets: '@/assets',
-        components: '@/components',
-        views: '@/views',
-        network: '@/network',
-        common: '@/common'
-      }
+    chainWebpack: config => {
+        config.when(process.env.NODE_ENV === 'production', config => {
+            config.entry('app').clear().add('./src/main-prod.js')
+        })
+        config.when(process.env.NODE_ENV === 'development', config => {
+            config.entry('app').clear().add('./src/main-dev.js')
+        })
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+                assets: '@/assets',
+                components: '@/components',
+                views: '@/views',
+                network: '@/network',
+                common: '@/common'
+            }
+        }
+    },
+    publicPath: './',
+    devServer: {
+        open: true,
+        port: 8080
     }
-  },
-  publicPath: './',
-  devServer: {
-    open: true,
-    port: 8080
-  }
 }
-
 ```
-
-
 
 ### 3. 使用 externals 加载外部 CDN 资源
 
@@ -390,85 +437,87 @@ module.exports = {
 
 * 为了解决该问题，可以通过 webpack 的 externals 节点，来配置并加载外部的 CDN资源， 凡是生命在 externals 的第三方依赖包，都不会被打包
 
-
-
 * 通过 externals 加载外部 CDN 资源
 
   1. 在 vue.config.js 配置文件中配置
 
-     ```javascript
+$mdFormatter$35$mdFormatter$
+
+``` javascript
      module.exports = {
-       chainWebpack: config => {
-         // 发布模式
-         config.when(process.env.NODE_ENV === 'production', config => {
-           config.entry('app').clear().add('./src/main-prod.js')
-     
-           config.set('externals', {
-             vue: 'Vue',
-             'vue-router': 'VueRouter',
-             axios: 'axios',
-             vuex: 'Vuex',
-             'vue-lazyload': 'VueLazyload'
-           })
-         })
-     
-         // 开发模式
-         config.when(process.env.NODE_ENV === 'development', config => {
-           config.entry('app').clear().add('./src/main-dev.js')
-         })
-       },
-       configureWebpack: {
-         resolve: {
-           alias: {
-             assets: '@/assets',
-             components: '@/components',
-             views: '@/views',
-             network: '@/network',
-             common: '@/common'
-           }
+         chainWebpack: config => {
+             // 发布模式
+             config.when(process.env.NODE_ENV === 'production', config => {
+                 config.entry('app').clear().add('./src/main-prod.js')
+
+                 config.set('externals', {
+                     vue: 'Vue',
+                     'vue-router': 'VueRouter',
+                     axios: 'axios',
+                     vuex: 'Vuex',
+                     'vue-lazyload': 'VueLazyload'
+                 })
+             })
+
+             // 开发模式
+             config.when(process.env.NODE_ENV === 'development', config => {
+                 config.entry('app').clear().add('./src/main-dev.js')
+             })
+         },
+         configureWebpack: {
+             resolve: {
+                 alias: {
+                     assets: '@/assets',
+                     components: '@/components',
+                     views: '@/views',
+                     network: '@/network',
+                     common: '@/common'
+                 }
+             }
+         },
+         publicPath: './',
+         devServer: {
+             open: true,
+             port: 8080
          }
-       },
-       publicPath: './',
-       devServer: {
-         open: true,
-         port: 8080
-       }
      }
-     ```
+```
 
      
 
   2. 同时，需要在 public/index.html 文件的头部，添加如下的CDN资源引用
 
-     ```html
+$mdFormatter$35$mdFormatter$
+
+``` html
      <!DOCTYPE html>
      <html lang="en">
-     
+
      <head>
-       <meta charset="utf-8">
-       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-       <meta name="viewport" content="width=device-width,initial-scale=1.0">
-       <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-       <title><%= htmlWebpackPlugin.options.title %></title>
-       <!-- js文件 -->
-       <script src="https://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/vuex@3.3.0/dist/vuex.min.js"></script>
-       <script src="https://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/vue-lazyload@1.3.3/vue-lazyload.min.js"></script>
+         <meta charset="utf-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <meta name="viewport" content="width=device-width,initial-scale=1.0">
+         <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+         <title><%= htmlWebpackPlugin.options.title %></title>
+         <!-- js文件 -->
+         <script src="https://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/vuex@3.3.0/dist/vuex.min.js"></script>
+         <script src="https://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/vue-lazyload@1.3.3/vue-lazyload.min.js"></script>
      </head>
-     
+
      <body>
-       <noscript>
-         <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-           Please enable it to continue.</strong>
-       </noscript>
-       <div id="app"></div>
-       <!-- built files will be auto injected -->
+         <noscript>
+             <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+                 Please enable it to continue.</strong>
+         </noscript>
+         <div id="app"></div>
+         <!-- built files will be auto injected -->
      </body>
-     
+
      </html>
-     ```
+```
 
      
 
@@ -480,15 +529,15 @@ module.exports = {
 
 2. 在 index.html 页面中加入
 
-   ```html
-   <!-- 引入样式文件 -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.8/lib/index.css"/>
    
+
+``` html
+   <!-- 引入样式文件 -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.8/lib/index.css" />
+
    <!-- 引入 Vant 的 JS 文件 -->
    <script src="https://cdn.jsdelivr.net/npm/vant@2.8/lib/vant.min.js"></script>
-   ```
-
-
+```
 
 ### 5. 自定制首页的内容
 
@@ -496,20 +545,55 @@ module.exports = {
 
 * 通过在 vue.config.js 文件中的发布模式情况下，配置一个 isProd 属性，用于首页定制，来判断是否加载js和css文件
 
-  ```javascript
-  config.plugin('html').tap(args => {
-    args[0].isProd = true
-    return args
-  })
-  ```
-
   
+
+``` javascript
+  config.plugin('html').tap(args => {
+      args[0].isProd = true
+      return args
+  })
+```
+
+* 在 index.html 页面使用 isProd 判断是否加载外部引入的文件 和 自定制标题名
+
+``` html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.isProd ? '' : 'dev - '  %>G商城</title>
+
+    <% if(htmlWebpackPlugin.options.isProd) { %>
+    <!-- js文件 -->
+    <script src="https://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.3.0/dist/vuex.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-lazyload@1.3.3/vue-lazyload.min.js"></script>
+    <% } %>
+</head>
+
+<body>
+    <noscript>
+        <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+            Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+</body>
+
+</html>
+```
 
 ### 6. 路由懒加载
 
 通过声明对象的写法，使用 () => import() 语法进行路由懒加载
 
-```javascript
+``` javascript
 const Home = () => import('views/home/Home')
 const Category = () => import('views/category/Category')
 const Cart = () => import('views/cart/Cart')
@@ -517,4 +601,3 @@ const Profile = () => import('views/profile/Profile')
 const Detail = () => import('views/detail/Detail')
 const Login = () => import('views/login/Login')
 ```
-
