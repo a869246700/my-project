@@ -190,8 +190,8 @@ export default {
       // 定义高度
       this.themeTopYs = []
       this.themeTopYs.push(0)
-      this.themeTopYs.push(this.$refs.params.$el.offsetTop)
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.params.$el.offsetTop)
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
       // 添加一个占位
       this.themeTopYs.push(Number.MAX_VALUE)
@@ -442,7 +442,7 @@ export default {
   },
   mounted() {
     // 进入页面时，防止首页滚动的高度对本页面进行干扰，进入组件时，置顶
-    this.$refs.scroll.scrollTo(0)
+    window.scrollTo(0, 0)
   }
 }
 </script>
