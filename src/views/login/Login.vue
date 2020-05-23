@@ -117,7 +117,8 @@ export default {
         this.isShow = false
 
         // 6. 跳转到主页
-        this.$router.push('/profile')
+        // this.$router.push('/profile')
+        this.$router.go(-1)
       }, 1500)
     },
     // 用户名自定义检验方法

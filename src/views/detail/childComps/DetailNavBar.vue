@@ -4,8 +4,8 @@
       <div class="center">
         <van-tabs v-model="active" @click="handleTabClick">
           <van-tab title="商品"></van-tab>
-          <van-tab title="参数"></van-tab>
           <van-tab title="评论"></van-tab>
+          <van-tab title="参数"></van-tab>
           <van-tab title="推荐"></van-tab>
         </van-tabs>
       </div>

@@ -19,14 +19,14 @@
       <!-- 商家信息 -->
       <detail-shop-info :shop="shop" />
 
+      <!-- 用户评论 -->
+      <detail-comment-info :comment-info="commentInfo" ref="comment" />
+
       <!-- 商品参数列表 -->
       <detail-param-info :paramInfo="paramInfo" ref="params" />
 
       <!-- 商品详细信息 -->
       <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
-
-      <!-- 用户评论 -->
-      <detail-comment-info :comment-info="commentInfo" ref="comment" />
 
       <!-- 推荐商品 -->
       <detail-recommend-info :recommends="recommends" ref="recommend" />
@@ -156,7 +156,6 @@ export default {
       // 配置购买栏的参数
       this.$refs.addCart.goodsId = this.Id
       this.handleConfigureTrading()
-      console.log(this.sku)
     },
     // 下拉加载更多
     handleLoadMore() {

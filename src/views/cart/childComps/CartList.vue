@@ -36,4 +36,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.van-pull-refresh {
+  height: calc(100vh - 99px);
+}
 </style>
