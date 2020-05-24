@@ -21,14 +21,13 @@
       <!-- 推荐视图 -->
       <home-recommend :recommendList="recommendList" />
 
-      <!-- 粘性布局 -->
-      <van-sticky :offset-top="49">
-        <!-- 顶部导航栏，吸顶效果 -->
-        <tab-control :tabs="tabControls" @tabClick="handleTabClick" ref="tabcontrol" />
-      </van-sticky>
-
-      <!-- 物品显示 -->
-      <goods :goodsList="goodsList" ref="goods" />
+      <!-- 商品列表 -->
+      <home-goods-list
+        ref="goodslist"
+        :goodsList="goods"
+        :tabs="tabControls"
+        @tabChange="handleTabChange"
+      />
     </scroll>
 
     <!-- 返回顶部按钮 -->
@@ -43,11 +42,12 @@
 // 导入组件
 import NavBar from 'components/common/navbar/NavBar'
 import Search from 'components/common/search/Search'
-import TabControl from 'components/common/tabcontrol/TabControl'
 import Scroll from 'components/common/scroll/Scroll'
-import Goods from 'components/common/goods/Goods'
+
 import HomeSwiper from './childComps/HomeSwiper'
 import HomeRecommend from './childComps/HomeRecommend'
+import HomeGoodsList from './childComps/HomeGoodsList'
+
 import { getHomeMultidata, getHomeGoods } from 'network/home'
 import { backTopMixin, MockMixin } from 'common/mixin'
 
@@ -56,11 +56,10 @@ export default {
   components: {
     NavBar,
     Search,
-    TabControl,
     Scroll,
-    Goods,
     HomeSwiper,
-    HomeRecommend
+    HomeRecommend,
+    HomeGoodsList
   },
   mixins: [backTopMixin, MockMixin],
   data() {
@@ -98,9 +97,7 @@ export default {
       // 当前的 tab
       currentType: 'pop',
       // 离开时的
-      saveY: 0,
-      // 是否记录了每个tab的高度
-      isRecode: false
+      saveY: 0
     }
   },
   created() {
@@ -138,16 +135,8 @@ export default {
       }, 500)
     },
     // 监听tabs点击切换
-    handleTabClick(name) {
+    handleTabChange(name) {
       this.currentType = name
-      // 首次进入时判断是否已经记录了高度
-      if (!this.isRecode) {
-        this.isRecode = true
-        this.goods.pop.offsetTop = this.$refs.tabcontrol.$el.offsetTop
-        this.goods.new.offsetTop = this.$refs.tabcontrol.$el.offsetTop
-        this.goods.sell.offsetTop = this.$refs.tabcontrol.$el.offsetTop
-      }
-      this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
     },
     // 加载当前类型的数据
     getCurrentTypeData() {
@@ -156,8 +145,9 @@ export default {
     },
     // 监听页面滚动
     handleScroll(offsetTop) {
-      // 1. 判断 backTop 是否显示
       this.goods[this.currentType].offsetTop = offsetTop
+
+      // 1. 判断 backTop 是否显示
       this.showBackTop(offsetTop, 1000)
     },
     // 下拉刷新首页
@@ -169,14 +159,7 @@ export default {
       this.initHomeDatas()
     }
   },
-  computed: {
-    // 数据列表数据
-    goodsList() {
-      return this.goods[this.currentType].list
-    }
-  },
   activated() {
-    console.log('Home activated')
     this.$refs.scroll.scrollTo(this.saveY)
   },
   deactivated() {

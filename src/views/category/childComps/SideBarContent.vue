@@ -1,67 +1,72 @@
 /* eslint-disable vue/return-in-computed-property */
 <template>
-  <div class="content">
-    <tab-control :tabs="tabControls" class="tab-control" @tabClick="handleTabClick" />
+  <div id="side-bar-content">
     <!-- 列表 -->
-    <scroll ref="scroll" class="scroll">
-      <goods :goodsList="goodsList" />
-    </scroll>
+    <van-tabs
+      v-model="active"
+      swipeable
+      animated
+      lazy-render
+      @change="tabChange"
+      sticky
+      :offset-top="49"
+    >
+      <van-tab :title="tabControls[0].title">
+        <goods :goodsList="goodsList.pop" />
+      </van-tab>
+      <van-tab :title="tabControls[1].title">
+        <goods :goodsList="goodsList.sell" />
+      </van-tab>
+      <van-tab :title="tabControls[2].title">
+        <goods :goodsList="goodsList.new" />
+      </van-tab>
+    </van-tabs>
+    <scroll ref="scroll" class="scroll"></scroll>
   </div>
 </template>
 
 <script>
-import TabControl from 'components/common/tabcontrol/TabControl'
 import Scroll from 'components/common/scroll/Scroll'
 import Goods from 'components/common/goods/Goods'
 export default {
   name: 'SideBarContent',
-  components: { TabControl, Scroll, Goods },
+  components: { Scroll, Goods },
   data() {
-    return {}
+    return {
+      active: 0
+    }
   },
   props: {
     tabControls: {
       type: Array,
-      default() {
-        return []
-      }
+      default: () => []
     },
     goodsList: {
-      type: Array,
-      default() {
-        return []
-      }
+      type: Object,
+      default: () => {}
     }
   },
   methods: {
     // tab栏点击
-    handleTabClick(name) {
-      this.$emit('handleTabClick', name)
+    tabChange() {
+      console.log(this.tabControls[this.active].name)
+      this.$emit('handleTabClick', this.tabControls[this.active].name)
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
-.content {
+<style lang="less">
+#side-bar-content {
   flex: 1;
   height: calc(100vh - 99px);
   overflow: scroll;
 
-  .tab-control {
-    position: fixed;
-    top: 49px;
-    right: 0;
-    left: 80px;
-    z-index: 999;
+  .van-sticky--fixed {
+    left: 80px !important;
   }
-
-  .scroll {
-    margin-top: 40px;
-  }
-
 }
-.content::-webkit-scrollbar {
+#side-bar-content::-webkit-scrollbar {
   display: none;
 }
 </style>

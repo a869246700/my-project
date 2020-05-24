@@ -29,8 +29,10 @@ export default {
     // 加载
     onLoad() {
       if (this.$router.history.current.path === '/category') {
-        this.finished = true
-        this.loading = false
+        setTimeout(() => {
+          this.finished = true
+          this.loading = false
+        }, 1000)
       }
       this.$emit('handleDataLoad')
     },
