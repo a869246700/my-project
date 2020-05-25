@@ -5,26 +5,28 @@
 
     <!-- 滚动视图 -->
     <my-scroll @onScroll="handleScroll" ref="scroll" class="scroll">
-      <!-- 商品轮播图 -->
-      <detail-swiper :imgs="topImages" />
+      <list @pullRefresh="handleRefresh" ref="list" @loadMore="handleLoadMore">
+        <!-- 商品轮播图 -->
+        <detail-swiper :imgs="topImages" />
 
-      <!-- 商品基本信息 -->
-      <detail-base-info :goods="goods" />
+        <!-- 商品基本信息 -->
+        <detail-base-info :goods="goods" />
 
-      <!-- 商家信息 -->
-      <detail-shop-info :shop="shop" />
+        <!-- 商家信息 -->
+        <detail-shop-info :shop="shop" />
 
-      <!-- 用户评论 -->
-      <detail-comment-info :comment-info="commentInfo" ref="comment" />
+        <!-- 用户评论 -->
+        <detail-comment-info :comment-info="commentInfo" ref="comment" />
 
-      <!-- 商品参数列表 -->
-      <detail-param-info :paramInfo="paramInfo" ref="params" />
+        <!-- 商品参数列表 -->
+        <detail-param-info :paramInfo="paramInfo" ref="params" />
 
-      <!-- 商品详细信息 -->
-      <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
+        <!-- 商品详细信息 -->
+        <detail-goods-info :detail-info="detailInfo" ref="goodsinfo" @imgLoad="handleImageLoad" />
 
-      <!-- 推荐商品 -->
-      <detail-recommend-info :recommends="recommends" ref="recommend" />
+        <!-- 推荐商品 -->
+        <detail-recommend-info :recommends="recommends" ref="recommend" />
+      </list>
     </my-scroll>
 
     <detail-bottom @addCart="handleBottomClick" />
@@ -42,6 +44,7 @@
 
 <script>
 import MyScroll from 'components/common/myscroll/MyScroll'
+import List from 'components/content/list/List'
 import { MockMixin, backTopMixin } from 'common/mixin'
 // 请求
 import {
@@ -68,6 +71,7 @@ export default {
   mixins: [MockMixin, backTopMixin],
   components: {
     MyScroll,
+    List,
     DetailNavBar,
     DetailSwiper,
     DetailBaseInfo,
@@ -419,6 +423,15 @@ export default {
       this.addCart(product).then(res => {
         this.Toast.success('成功')
       })
+    },
+    handleRefresh() {
+      setTimeout(() => {
+        this.$refs.list.refreshing = false
+      }, 1000)
+    },
+    handleLoadMore() {
+      this.$refs.list.loading = false
+      this.$refs.list.finished = true
     }
   },
   computed: {
