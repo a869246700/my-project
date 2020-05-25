@@ -94,8 +94,9 @@ export default {
       commentInfo: {}, // 评论信息
       recommends: [], // 推荐信息
       themeTopYs: [], // 每个组件的offsetTop
-      currentIndex: 0,
-      sku: {}
+      currentIndex: 0, // 当前滚动到的位置
+      sku: {}, // 添加商品的配置项
+      promptLoginDialogVisible: false // 控制提示登录的显示与隐藏
     }
   },
   created() {
@@ -106,55 +107,67 @@ export default {
     ...mapActions(['addCart']),
     // 初始化商品信息
     async initGoodsInfo() {
-      // 保存商品的 Id
-      this.Id = this.$route.query.id
-      // 根据 Id 请求数据
-      const { data: res } = await getDetail(this.Id)
-      if (res.status.code !== 1001) {
-        return this.toast.fail('请求商品详细数据失败!')
-      }
+      try {
+        // 保存商品的 Id
+        this.Id = this.$route.query.id
+        // 根据 Id 请求数据
+        const { data: res } = await getDetail(this.Id)
 
-      // 保存数据
-      // 1. 获取顶部轮播图图片
-      this.topImages = res.result.itemInfo.topImages
-      // 2.商品信息
-      this.goods = new Goods(
-        res.result.itemInfo,
-        res.result.columns,
-        res.result.shopInfo.services
-      )
-      // 3. 商铺信息对象
-      this.shop = new Shop(res.result.shopInfo)
-      // 4. 商品详细信息
-      this.detailInfo = res.result.detailInfo
-      // 5. 商品参数信息
-      if (res.result.itemParams.rule) {
-        this.paramInfo = new GoodsParam(
-          res.result.itemParams.info,
-          res.result.itemParams.rule
+        if (res.status.code !== 1001) {
+          return this.toast.fail('请求商品详细数据失败!')
+        }
+
+        // 保存数据
+        // 1. 获取顶部轮播图图片
+        this.topImages = res.result.itemInfo.topImages
+        // 2.商品信息
+        this.goods = new Goods(
+          res.result.itemInfo,
+          res.result.columns,
+          res.result.shopInfo.services
         )
-      } else {
-        this.Toast.fail('商品参数信息不完整')
-        this.paramInfo = new GoodsParam(res.result.itemParams.info, {})
-      }
-      // 6. 获取评论信息
-      if (res.result.rate.cRate !== 0) {
-        this.commentInfo = res.result.rate.list[0]
-      }
+        // 3. 商铺信息对象
+        this.shop = new Shop(res.result.shopInfo)
+        // 4. 商品详细信息
+        this.detailInfo = res.result.detailInfo
+        // 5. 商品参数信息
+        if (res.result.itemParams.rule) {
+          this.paramInfo = new GoodsParam(
+            res.result.itemParams.info,
+            res.result.itemParams.rule
+          )
+        } else {
+          this.Toast.fail('商品参数信息不完整')
+          this.paramInfo = new GoodsParam(res.result.itemParams.info, {})
+        }
+        // 6. 获取评论信息
+        if (res.result.rate.cRate !== 0) {
+          this.commentInfo = res.result.rate.list[0]
+        }
 
-      // 7. 获取推荐数据
-      const resp = await getRecommend()
-      if (resp.status !== 200) {
-        return this.toast.fail('获取推荐信息失败!')
+        // 7. 获取推荐数据
+        const resp = await getRecommend()
+        if (resp.status !== 200) {
+          return this.toast.fail('获取推荐信息失败!')
+        }
+        this.recommends.push(...resp.data.data.list)
+
+        // 8. 加载成功，隐藏 mock
+        this.$refs.mock.isMockShow = false
+
+        // 9. 模拟，配置购买栏的参数
+        this.$refs.addCart.goodsId = this.Id
+        this.handleConfigureTrading()
+      } catch (e) {
+        this.$refs.mock.isMockShow = false
+        // 1. 提示用户商品请求失败
+        this.Toast.fail('请求商品数据失败!')
+
+        // 2. 返回上一级目录
+        setTimeout(() => {
+          this.$router.go(-1)
+        }, 1000)
       }
-      this.recommends.push(...resp.data.data.list)
-
-      // 加载成功，隐藏 mock
-      this.$refs.mock.isMockShow = false
-
-      // 配置购买栏的参数
-      this.$refs.addCart.goodsId = this.Id
-      this.handleConfigureTrading()
     },
     // 滚动监听
     handleScroll(y) {
@@ -192,12 +205,25 @@ export default {
     // 监听底部点击事件
     handleBottomClick() {
       // 加入购物车或者购买时，需要先登录
-      // 如果没有登录则不显示加入购物车，而是跳转去登录
-      if (this.isLogin) {
-        this.$refs.addCart.show = true
+      // 如果没有登录，提醒需要登录，点击前往登录，或者取消前往登录
+      if (!this.isLogin) {
+        this.Dialog.confirm({
+          title: '友情提示',
+          message: '您还未登录，请前往登录！'
+        })
+          .then(() => {
+            this.handleToLogin()
+          })
+          .catch(() => {
+            this.Toast('已取消')
+          })
       } else {
-        this.$router.push('/login')
+        this.$refs.addCart.show = true
       }
+    },
+    // 前往登录
+    handleToLogin() {
+      this.$router.push('/login')
     },
     // 监听全部图片是否加载完成
     handleImageLoad() {
