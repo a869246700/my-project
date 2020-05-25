@@ -15,8 +15,12 @@ export const backTopMixin = {
       const timer = null
       smoothScroll(timer)
     },
+    // 滚动高度， 指定显示高度
     showBackTop(position, Y) {
       this.isShowBackTop = position > Y
+    },
+    clickBackTop() {
+      this.$refs.scroll.scrollTo(0)
     }
   },
   components: {

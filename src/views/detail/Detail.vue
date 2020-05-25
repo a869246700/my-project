@@ -1,15 +1,10 @@
 <template>
   <div id="detail">
-    <!-- navbar -->
+    <!-- 顶部栏 -->
     <detail-nav-bar @tabClick="handleTabClick" ref="nav" />
 
-    <scroll
-      ref="scroll"
-      class="scroll"
-      @handleDataLoad="handleLoadMore"
-      @onScroll="handleScroll"
-      @handleRefresh="handleRefresh"
-    >
+    <!-- 滚动视图 -->
+    <my-scroll @onScroll="handleScroll" ref="scroll" class="scroll">
       <!-- 商品轮播图 -->
       <detail-swiper :imgs="topImages" />
 
@@ -30,7 +25,7 @@
 
       <!-- 推荐商品 -->
       <detail-recommend-info :recommends="recommends" ref="recommend" />
-    </scroll>
+    </my-scroll>
 
     <detail-bottom @addCart="handleBottomClick" />
 
@@ -38,7 +33,7 @@
     <mock ref="mock" />
 
     <!-- 返回顶部按钮 -->
-    <back-top v-show="isShowBackTop" @click.native="backTop" />
+    <back-top v-show="isShowBackTop" @click.native="clickBackTop" />
 
     <!-- 加入购物车 -->
     <detail-add-cart ref="addCart" :sku="sku" @addCart="handleAddCart" />
@@ -46,7 +41,7 @@
 </template>
 
 <script>
-import Scroll from 'components/common/scroll/Scroll'
+import MyScroll from 'components/common/myscroll/MyScroll'
 import { MockMixin, backTopMixin } from 'common/mixin'
 // 请求
 import {
@@ -72,7 +67,7 @@ export default {
   name: 'Detail',
   mixins: [MockMixin, backTopMixin],
   components: {
-    Scroll,
+    MyScroll,
     DetailNavBar,
     DetailSwiper,
     DetailBaseInfo,
@@ -157,11 +152,6 @@ export default {
       this.$refs.addCart.goodsId = this.Id
       this.handleConfigureTrading()
     },
-    // 下拉加载更多
-    handleLoadMore() {
-      this.$refs.scroll.loading = false
-      this.$refs.scroll.finished = true
-    },
     // 滚动监听
     handleScroll(y) {
       // 当页面滚动高度超过 2000 显示 backtop 组件
@@ -178,12 +168,6 @@ export default {
           this.$refs.nav.active = this.currentIndex
         }
       }
-    },
-    // 下拉刷新
-    handleRefresh() {
-      setTimeout(() => {
-        this.$refs.scroll.refreshing = false
-      }, 1000)
     },
     // 计算组件在页面的高度
     initHeight() {
@@ -439,10 +423,6 @@ export default {
   },
   computed: {
     ...mapGetters(['isLogin'])
-  },
-  mounted() {
-    // 进入页面时，防止首页滚动的高度对本页面进行干扰，进入组件时，置顶
-    window.scrollTo(0, 0)
   }
 }
 </script>
@@ -450,10 +430,10 @@ export default {
 #detail {
   position: relative;
   background-color: #fff;
-  margin-bottom: 49px;
 
   .scroll {
     margin-top: 49px;
+    height: calc(100vh - 96px);
   }
 }
 </style>

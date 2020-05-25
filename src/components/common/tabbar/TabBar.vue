@@ -3,7 +3,7 @@
     v-model="active"
     route
     inactive-color="#999999"
-    active-color="#1e90ff"
+    active-color="#ec4d4d"
     :z-index="99"
   >
     <van-tabbar-item

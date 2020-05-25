@@ -32,9 +32,9 @@ export default {
 
 <style lang="less" scoped>
 .sidebar {
+  width: 80px;
   height: calc(100vh - 99px);
   overflow: auto;
-  width: 80px;
 }
 
 .sidebar::-webkit-scrollbar {

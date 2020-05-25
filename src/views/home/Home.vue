@@ -8,30 +8,26 @@
     </nav-bar>
 
     <!-- 滚动框 -->
-    <scroll
-      ref="scroll"
-      class="scroll"
-      @handleDataLoad="getCurrentTypeData"
-      @onScroll="handleScroll"
-      @handleRefresh="handleRefresh"
-    >
-      <!-- 轮播图 -->
-      <home-swiper :imgs="swiperList" />
+    <my-scroll class="scroll" ref="scroll" @onScroll="handleScroll">
+      <list @pullRefresh="handleRefresh" ref="list" @loadMore="getCurrentTypeData">
+        <!-- 轮播图 -->
+        <home-swiper :imgs="swiperList" />
 
-      <!-- 推荐视图 -->
-      <home-recommend :recommendList="recommendList" />
+        <!-- 推荐视图 -->
+        <home-recommend :recommendList="recommendList" />
 
-      <!-- 商品列表 -->
-      <home-goods-list
-        ref="goodslist"
-        :goodsList="goods"
-        :tabs="tabControls"
-        @tabChange="handleTabChange"
-      />
-    </scroll>
+        <!-- 商品列表 -->
+        <home-goods-list
+          ref="goodslist"
+          :goodsList="goods"
+          :tabs="tabControls"
+          @tabChange="handleTabChange"
+        />
+      </list>
+    </my-scroll>
 
     <!-- 返回顶部按钮 -->
-    <back-top v-show="isShowBackTop" @click.native="backTop" />
+    <back-top v-show="isShowBackTop" @click.native="clickBackTop" />
 
     <!-- mock -->
     <mock ref="mock" />
@@ -42,11 +38,11 @@
 // 导入组件
 import NavBar from 'components/common/navbar/NavBar'
 import Search from 'components/common/search/Search'
-import Scroll from 'components/common/scroll/Scroll'
-
+import MyScroll from 'components/common/myscroll/MyScroll'
 import HomeSwiper from './childComps/HomeSwiper'
 import HomeRecommend from './childComps/HomeRecommend'
 import HomeGoodsList from './childComps/HomeGoodsList'
+import List from 'components/content/list/List'
 
 import { getHomeMultidata, getHomeGoods } from 'network/home'
 import { backTopMixin, MockMixin } from 'common/mixin'
@@ -56,10 +52,11 @@ export default {
   components: {
     NavBar,
     Search,
-    Scroll,
+    MyScroll,
     HomeSwiper,
     HomeRecommend,
-    HomeGoodsList
+    HomeGoodsList,
+    List
   },
   mixins: [backTopMixin, MockMixin],
   data() {
@@ -107,16 +104,17 @@ export default {
   methods: {
     // 获取商品的数据
     async getData(type, page) {
+      // 1. 请求数据
       const { data: res } = await getHomeGoods(type, page)
-      if (this.$refs.scroll.refreshing) {
-        this.$refs.scroll.refreshing = false
-      }
-      this.$refs.scroll.loading = false
 
+      // 2. 修改加载状态
+      this.$refs.list.loading = false
       if (res.data.list.length === 0) {
-        this.$refs.scroll.finished = true
+        this.$refs.list.finished = true
         return
       }
+
+      // 3. 保存数据
       this.goods[type].list.push(...res.data.list)
     },
     // 获取轮播图
@@ -131,31 +129,47 @@ export default {
       this.getData('sell', ++this.goods.sell.page)
       this.getData('new', ++this.goods.new.page)
       setTimeout(() => {
+        this.$refs.list.refreshing = false
         this.$refs.mock.isMockShow = false
-      }, 500)
+      }, 800)
     },
     // 监听tabs点击切换
     handleTabChange(name) {
+      // 1. 改变当前类型
       this.currentType = name
+
+      // 2. 滚动到对应类型的高度
+      // 2.1 如果高度低于粘性布局的高度，则直接跳转到粘性布局
+      if (this.goods[this.currentType].offsetTop < this.$refs.goodslist.$el.offsetTop) {
+        this.$refs.scroll.scrollTo(this.$refs.goodslist.$el.offsetTop)
+      } else {
+        // 2.2 如果高度大于粘性布局的高度，则跳转至保存的高度
+        this.$refs.scroll.scrollTo(this.goods[this.currentType].offsetTop)
+      }
     },
     // 加载当前类型的数据
     getCurrentTypeData() {
-      const page = this.goods[this.currentType].page + 1
-      this.getData(this.currentType, page)
+      // 页码 ++
+      this.getData(this.currentType, ++this.goods[this.currentType].page)
     },
     // 监听页面滚动
-    handleScroll(offsetTop) {
-      this.goods[this.currentType].offsetTop = offsetTop
-
+    handleScroll(y) {
       // 1. 判断 backTop 是否显示
-      this.showBackTop(offsetTop, 1000)
+      this.showBackTop(y, 1000)
+
+      // 2. 保存当前类型的高度
+      this.goods[this.currentType].offsetTop = y
     },
     // 下拉刷新首页
     handleRefresh() {
-      // 刷新首页所有数据
+      // 1. 清空保存的所有数据
       this.goods.pop.list = []
+      this.goods.pop.offsetTop = 0
       this.goods.new.list = []
+      this.goods.new.offsetTop = 0
       this.goods.sell.list = []
+      this.goods.sell.offsetTop = 0
+      // 2. 重新请求数据
       this.initHomeDatas()
     }
   },
@@ -174,6 +188,7 @@ export default {
 
   .scroll {
     margin-top: 49px;
+    height: calc(100vh - 99px);
   }
 
   .tab-control {
