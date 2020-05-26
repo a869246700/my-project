@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <van-image round width="150" height="150" :src="avatar" class="avatar" lazy-load />
+    <img v-lazy="avatar" class="avatar" />
     <!-- 表单验证 -->
     <van-form @submit="onSubmit" ref="form">
       <!-- 用户名输入框 -->
@@ -16,7 +16,7 @@
           <van-icon
             name="question"
             v-show="username.length === 0"
-            @click="Toast('用户名的长度为 3 - 10 位')"
+            @click="$toast('用户名的长度为 3 - 10 位')"
           />
           <van-icon name="cross" @click="handleUsernameClear" v-show="username.length !== 0" />
         </template>
@@ -36,7 +36,7 @@
           <van-icon
             name="question"
             v-show="password.length === 0"
-            @click="Toast('密码的长度为 6 - 15 位')"
+            @click="$toast('密码的长度为 6 - 15 位')"
           />
           <van-icon name="cross" @click="handlePasswordClear" v-show="password.length !== 0" />
         </template>
@@ -167,6 +167,9 @@ export default {
   align-items: center;
 
   .avatar {
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
     margin-bottom: 20px;
   }
 

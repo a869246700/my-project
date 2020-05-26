@@ -1,5 +1,5 @@
 <template>
-  <van-grid-item @click="handleItemClick()">
+  <van-grid-item @click="handleItemClick">
     <div class="item">
       <img v-lazy="showImg" @load="imgLoad"/>
       <div class="item-info">

@@ -20,15 +20,15 @@ export default {
     onSubmit() {
       // 1. 如果没有商品 或者 没有商品被选中，直接返回
       // 1.1 没有商品
-      if (this.isExist) return this.Toast.fail('购物车没有商品')
+      if (this.isExist) return this.$toast.fail('购物车没有商品')
       // 1.2 没有商品选中
-      if (this.isExistChecked) return this.Toast.fail('没有选中商品')
+      if (this.isExistChecked) return this.$toast.fail('没有选中商品')
 
       // 2. 移除被选中的商品
       this.removeAllChecked()
 
       // 3. 提示成功
-      this.Toast.success('提交订单成功')
+      this.$toast.success('提交订单成功')
     },
     handleCheckAll() {
       if (this.isExist) return
@@ -36,11 +36,11 @@ export default {
       if (this.isSelectAll) {
         //   全部选中的情况
         this.changeAllCheck(true)
-        this.Toast('商品取消全选')
+        this.$toast('商品取消全选')
       } else {
         //   全部未选中 或者 部分未选中
         this.changeAllCheck(false)
-        this.Toast('商品全选')
+        this.$toast('商品全选')
       }
     }
   },

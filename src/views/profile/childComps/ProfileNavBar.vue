@@ -26,7 +26,7 @@ export default {
       this.$router.push('login')
     },
     handleLogout() {
-      this.Dialog.confirm({
+      this.$dialog.confirm({
         title: '确认退出'
       })
         .then(() => {
@@ -35,7 +35,7 @@ export default {
           this.logout()
         })
         .catch(() => {
-          this.Toast('取消退出')
+          this.$toast('取消退出')
         })
     }
   },

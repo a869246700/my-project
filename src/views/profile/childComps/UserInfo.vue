@@ -2,11 +2,9 @@
   <div id="user-info">
     <div class="left">
       <slot name="user-picture">
-        <van-image
-          :src="userInfo.avatar"
+        <img
+          :src="userAvatar"
           class="user-picture"
-          round
-          @click="Toast(userInfo.username)"
         />
       </slot>
       <div class="user-login">
@@ -30,8 +28,16 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'UserInfo',
+  data() {
+    return {
+      defaultAvatar: require('assets/img/common/profile.png')
+    }
+  },
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState(['userInfo']),
+    userAvatar() {
+      return this.userInfo.avatar || this.defaultAvatar
+    }
   }
 }
 </script>
@@ -51,8 +57,8 @@ export default {
     .user-picture {
       height: 60px;
       width: 60px;
-      border-radius: 70px;
-      background: #eee;
+      border-radius: 50%;
+      background: var(--color-tint);
     }
 
     .user-login {

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import {
   Button,
   Cell,
@@ -15,7 +16,6 @@ import {
   Tab,
   Swipe,
   SwipeItem,
-  Lazyload,
   Grid,
   GridItem,
   Toast,
@@ -30,7 +30,7 @@ import {
   Sku,
   Form,
   Field,
-  Image,
+  Image as VanImage,
   Card,
   SubmitBar,
   Checkbox,
@@ -52,9 +52,7 @@ Vue.use(Tabs)
 Vue.use(Tab)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
-Vue.use(Lazyload, {
-  loading: require('assets/img/common/placeholder.jpg')
-})
+Vue.use(VanImage)
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(PullRefresh)
@@ -69,13 +67,10 @@ Vue.use(GoodsActionIcon)
 Vue.use(Sku)
 Vue.use(Form)
 Vue.use(Field)
-Vue.use(Image)
 Vue.use(Card)
 Vue.use(SubmitBar)
 Vue.use(Checkbox)
-
+Vue.use(Dialog)
 Toast.setDefaultOptions({ duration: 1000 })
 Toast.setDefaultOptions('loading', { forbidClick: true })
-Vue.prototype.Toast = Toast
-
-Vue.prototype.Dialog = Dialog
+Vue.use(Toast)

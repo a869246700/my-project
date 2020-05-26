@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     HandleClickForMore() {
-      this.Toast('功能还未开发完全')
+      this.$toast('功能还未开发完全')
     }
   },
   filters: {

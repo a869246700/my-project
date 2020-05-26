@@ -72,7 +72,7 @@ export default {
       const { data: res } = await getCategory()
 
       if (!res.success) {
-        return this.Toast.fail('获取分类列表失败！')
+        return this.$toast.fail('获取分类列表失败！')
       }
 
       this.categroyList = res.data.category.list
@@ -99,7 +99,7 @@ export default {
       const mailKey = this.categroyList[index].maitKey
       const { data: res } = await getSubcategory(mailKey)
       if (!res.success) {
-        return this.Toast.fail('获取类型数据失败！')
+        return this.$toast.fail('获取类型数据失败！')
       }
 
       this.categoryData[index].subcategories = res.data
@@ -117,7 +117,7 @@ export default {
       // 2.发送请求,传入miniWallkey和type
       const { data: res } = await getCategoryDetail(miniWallkey, type)
       if (res.length === 0) {
-        return this.Toast.fail('获取分类数据失败!')
+        return this.$toast.fail('获取分类数据失败!')
       }
 
       // 3. 数据存储

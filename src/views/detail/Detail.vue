@@ -114,7 +114,7 @@ export default {
         const { data: res } = await getDetail(this.Id)
 
         if (res.status.code !== 1001) {
-          return this.toast.fail('请求商品详细数据失败!')
+          return this.$toast.fail('请求商品详细数据失败!')
         }
 
         // 保存数据
@@ -137,7 +137,7 @@ export default {
             res.result.itemParams.rule
           )
         } else {
-          this.Toast.fail('商品参数信息不完整')
+          this.$toast.fail('商品参数信息不完整')
           this.paramInfo = new GoodsParam(res.result.itemParams.info, {})
         }
         // 6. 获取评论信息
@@ -148,7 +148,7 @@ export default {
         // 7. 获取推荐数据
         const resp = await getRecommend()
         if (resp.status !== 200) {
-          return this.toast.fail('获取推荐信息失败!')
+          return this.$toast.fail('获取推荐信息失败!')
         }
         this.recommends.push(...resp.data.data.list)
 
@@ -161,7 +161,7 @@ export default {
       } catch (e) {
         this.$refs.mock.isMockShow = false
         // 1. 提示用户商品请求失败
-        this.Toast.fail('请求商品数据失败!')
+        this.$toast.fail('请求商品数据失败!')
 
         // 2. 返回上一级目录
         setTimeout(() => {
@@ -207,7 +207,7 @@ export default {
       // 加入购物车或者购买时，需要先登录
       // 如果没有登录，提醒需要登录，点击前往登录，或者取消前往登录
       if (!this.isLogin) {
-        this.Dialog.confirm({
+        this.$dialog.confirm({
           title: '友情提示',
           message: '您还未登录，请前往登录！'
         })
@@ -215,7 +215,7 @@ export default {
             this.handleToLogin()
           })
           .catch(() => {
-            this.Toast('已取消')
+            this.$toast('已取消')
           })
       } else {
         this.$refs.addCart.show = true
@@ -447,7 +447,7 @@ export default {
       }
       // 2. 将商品添加到购物车里
       this.addCart(product).then(res => {
-        this.Toast.success('成功')
+        this.$toast.success('成功')
       })
     },
     handleRefresh() {

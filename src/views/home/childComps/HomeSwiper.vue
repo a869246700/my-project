@@ -2,7 +2,7 @@
   <!-- 轮播图 -->
   <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" :height="adaptHeight">
     <van-swipe-item v-for="(item, index) in imgs" :key="index">
-       <van-image  :height="adaptHeight" lazy-load :src="item.image" class="swiper-image" />
+      <img v-lazy="item.image" class="swiper-image" :height="adaptHeight" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     // 通过监听窗口的大小来设置轮播图的高度
-    this.adaptHeight = document.documentElement.offsetWidth * 0.56
+    this.adaptHeight = document.documentElement.offsetWidth * 0.6
   }
 }
 </script>
