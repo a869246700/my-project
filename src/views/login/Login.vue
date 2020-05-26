@@ -113,12 +113,13 @@ export default {
       window.sessionStorage.setItem('token', token)
 
       // 5. 模拟异步请求登录
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         this.isShow = false
 
-        // 6. 跳转到主页
-        // this.$router.push('/profile')
+        // 6. 跳转到到之前也页
         this.$router.go(-1)
+
+        clearTimeout(timer)
       }, 1500)
     },
     // 用户名自定义检验方法

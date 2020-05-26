@@ -164,8 +164,9 @@ export default {
         this.$toast.fail('请求商品数据失败!')
 
         // 2. 返回上一级目录
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           this.$router.go(-1)
+          clearTimeout(timer)
         }, 1000)
       }
     },
@@ -451,8 +452,9 @@ export default {
       })
     },
     handleRefresh() {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         this.$refs.list.refreshing = false
+        clearTimeout(timer)
       }, 1000)
     },
     handleLoadMore() {

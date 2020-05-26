@@ -128,9 +128,11 @@ export default {
       this.getData('pop', ++this.goods.pop.page)
       this.getData('sell', ++this.goods.sell.page)
       this.getData('new', ++this.goods.new.page)
-      setTimeout(() => {
+
+      const timer = setTimeout(() => {
         this.$refs.list.refreshing = false
         this.$refs.mock.isMockShow = false
+        clearTimeout(timer)
       }, 800)
     },
     // 监听tabs点击切换

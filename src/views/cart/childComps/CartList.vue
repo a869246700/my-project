@@ -22,8 +22,9 @@ export default {
   methods: {
     // 模拟下拉刷新
     onRefresh() {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         this.isLoading = false
+        clearTimeout(timer)
       }, 1000)
     }
   },

@@ -30,47 +30,40 @@ npm run lint
 首页主要是做渲染轮播图，推荐商品展示、搜索等
 
 * 顶部 NavBar
-
   + left：自定义Icon
   + center：Search 组件
 
-  
-
 * 滚动视图 Scroll
-
   + 轮播图  HomeSwiper
-
   + 首页推荐内容  HomeRecommend
-
   + 首页导航栏  TabControl
-
   + 商品列表  Goods
 
-    
+* 滚动视图 MyScroll
+  + 列表视图 List
+    - 轮播图  HomeSwiper
+    - 首页推荐内容  HomeRecommend
+    - 商品列表  HomeGoodsList
+      * 首页导航栏 Tabs
+      * 商品展示 Goods
 
 * TabControl 的粘性布局实现
-  1. 直接使用 vant 组件自带的 van-sticky 组件设置 offset-top 属性即可实现粘性布局。
-  2. 在首页定义两个 TabControl 组件，
+  1. 第一种方法：直接使用 vant 组件自带的 van-sticky 组件设置 offset-top 属性即可实现粘性布局。
+
+  2. 第二种方法：在首页定义两个 TabControl 组件，
 
      1. 第一个 TabControl 组件使用固定定位，定位在 NavBar 的正下方**绑定一个ref**，使用 v-if 条件判定将其隐藏。
-     
      2. 第二个 TabControl 组件直接放在滚动视图里**绑定一个ref**。
-     
      3. 在主页的Dom对象挂载完后，在生命函数 Mounted中 ，计算得到第二个 TabControl 组件的离顶高度。
-
-  
-
      4. 通过 Scroll 滚动视图的 Scroll滚动事件，当滚动高度大于第二个 TabControl 组件的离顶高度时，将 第一个 TabControl 组件显示出来，滚动高度小于第二个 TabControl 组件的离顶高度，则隐藏。
-     
      5. 因为使用了两个 TabControl 组件，不同的 TabControl 组件点击后的 active 是不同的，所以我们要在 handleTabControlClick 方法里，实现两个 TabControl 组件的 active 一致。
-     
-        
 
-  
+  3.  第三种方法：通过监听页面滚动事件，获取页面滚动的高度和TabControl的固定高度（注意：TabControl的固定高度的获取时机）。当页面滚动的高度和大于等于TabControl的固定高度后，为其添加样式为固定定位即可实现。
 
 * 使用混入 Mixin
   + 返回顶部  BackTop：该组件是用于显示返回顶部按钮的，当页面的高度超过某个高度，我们就可以让该组件在页面上的右下角显示，点击则可以返回页面的顶部
-  + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
+
+  + 加载组件  Mock：进入页面时数据加载时显示，在获取到请求数据后隐藏
 
   
   
@@ -79,53 +72,50 @@ npm run lint
 
 本页面主要实现的是，根据不同的分类名称获取不同的数据，再根据分类中类型的不同再划分数据。
 
-* SiderBar 和 SiderBarContent 在页面滚动时会同时滚动
+* 顶部 NavBar
+  + left：自定义Icon
+  + center：文本 "商品分类"
 
-  + 将 Category 界面的高度设置为100vh
+* 中间 wrapper
+  + 侧边栏  SiderBar
+  + 主体视图  SiderBarContent
+    - 滚动视图  Scroll
+      * 列表视图  List
+        - 导航栏  Tabs
+        - 商品展示  Goods 
+
+* 使用混入 Mixin
+  + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
+
+ + 需要实现两个组件滚动时相互不影响，且不影响整个页面的滚动
+
+    
 
 ``` css
-    #category {
-        height: 100vh;
-        overflow: hidden;
-        超出则隐藏
-    }
+        #category {
+            height: 100vh;
+            overflow: hidden;
+            超出则隐藏
+        }
 ```
 
   + 将 SideBar 和 SideBarContent 的高度设置为 100vh - NavBar - TabBar 的高度
 
+    
+
 ``` css
-    .side-bar {
-        height: calc(100vh - 50px - 49px);
-        overflow: auto;
-        超出则滚动
-    }
+        .side-bar {
+            height: calc(100vh - 50px - 49px);
+            overflow: auto;
+            超出则滚动
+        }
 
-    .sideBar-content {
-        height: calc(100vh - 50px - 49px);
-        overflow: auto;
-        超出则滚动
-    }
+        .sideBar-content {
+            height: calc(100vh - 50px - 49px);
+            overflow: auto;
+            超出则滚动
+        }
 ```
-
-​    
-
-* 顶部 NavBar
-
-  + left：自定义Icon
-  + center：文本 "商品分类"
-
-  
-
-* 侧边栏  SideBar
-
-  
-
-* 主体视图 SideBarContent
-  + 分页导航栏  TabControl
-  + 商品列表  Goods
-
-* 使用混入 Mixin
-  + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
 
 ### 四、购物车-Cart
 
@@ -135,20 +125,9 @@ npm run lint
 
 * 顶部 NavBar
   + left：自定义Icon
-
-  
-
-* center：文本 "购物车(当前加入购物车的内容)"
-
-  
-
-    
-
-  
+  + center：文本 "购物车(当前加入购物车的内容)"
 
 * 购物车列表 CartList
-
-  
 
 * 底部菜单选项 CartBottomBar
   + 全选按钮：1. 列表为空时，默认该按钮 disabled
@@ -161,42 +140,15 @@ npm run lint
 
 * 顶部 ProfileNavBar
   + left：自定义Icon
-
-  
-
   + center：文本 "个人中心"
-
   + right： 登入注销
-
-  
-
-    
-
-  
 
 * 用户信息栏 UserInfo
 
-  
-
-* 展示用户头像、用户账号名、用户的手机号等等
-
-  
-
-    
-
-  
+* 展示用户头像、用户账号名、用户的手机号等等 
 
 * 用户钱包栏 UserWallet
-
-  
-
-* 包含钱包余额、优惠券、积分等
-
-  
-
-    
-
-  
+  + 包含钱包余额、优惠券、积分等
 
 * 服务中心栏 ListView
   + 展示各种专属用用户的服务内容
@@ -218,19 +170,11 @@ npm run lint
 
 * 返回上一级按钮
 
-  
-
 * 点击返回之前的页面
 
-  
-
 * 使用混入 Mixin
-
-  
-
   + 加载组件  Mock：登陆时显示，在获取到登陆请求数据后隐藏
 
-  
   
 
 ### 七、商品详情页面-Detail
@@ -240,81 +184,39 @@ npm run lint
 * 顶部自定义导航栏 DetailNavBar
   + left：返回上一级按钮
   + center：独立的 TabControl 导航组件
-    - 用于用户点击跳转至页面不同位置，
-
-    
-
+    - 用于用户点击跳转至页面对应的位置
   + 当页面滚动到指定的位置时，tabcontrol 当前的选中会不同
-
-    
-
-      
-  
 
 * 滚动视图 Scroll
   + 商品轮播图 DetailSwiper
-
-  
-
   + 商品基本信息 DetaiBaseInfo
-
-  
-
   + 商家信息 DetailShopInfo
-
-  
-
   + 用户评论 DetailCommentInfo
-
   + 商品参数 DetailParamInfo
-
-  
-
   + 商品详细信息，图片等 DetailGoodsInfo
-
-  
-
   + 推荐商品 DetailRecommendInfo
-
-  
-
-    
-
-  
 
 * 底部栏 DetailBottom
   + 客服
-
-  
-
   + 店铺
-
-  
-
   + 收藏
-
   + 加入购物车：点击，没有登录会跳转至登录界面
-
-  
-
   + 立即购买：点击，没有登录会跳转至登录界面
-
-  
-
-    
-
-  
 
 * 加入购物车页面 DetailAddCart
   + 使用的是 vantUI 封装的 sku 组件
   + 先设置隐藏，当点击加入购物车或者立即购买时显示
 
   
-  
 
 * 使用混入 Mixin
   + 返回顶部  BackTop：该组件是用于显示返回顶部按钮的，当页面的高度超过某个高度，我们就可以让该组件在页面上的右下角显示，点击则可以返回页面的顶部
   + 加载组件  Mock：进入页面时加载时显示，在获取到请求数据后隐藏
+
+### 八、底部 TabBar 导航栏
+
+* 点击切换至不同的页面
+* 在购物车栏，采用了 badge 红色标记，来记录购物车中存在多少中商品
 
 ## 三、 项目优化
 
@@ -441,53 +343,73 @@ module.exports = {
 
   1. 在 vue.config.js 配置文件中配置
 
-$mdFormatter$35$mdFormatter$
+    
 
 ``` javascript
-     module.exports = {
-         chainWebpack: config => {
-             // 发布模式
-             config.when(process.env.NODE_ENV === 'production', config => {
-                 config.entry('app').clear().add('./src/main-prod.js')
-
-                 config.set('externals', {
-                     vue: 'Vue',
-                     'vue-router': 'VueRouter',
-                     axios: 'axios',
-                     vuex: 'Vuex',
-                     'vue-lazyload': 'VueLazyload'
-                 })
-             })
-
-             // 开发模式
-             config.when(process.env.NODE_ENV === 'development', config => {
-                 config.entry('app').clear().add('./src/main-dev.js')
-             })
-         },
-         configureWebpack: {
-             resolve: {
-                 alias: {
-                     assets: '@/assets',
-                     components: '@/components',
-                     views: '@/views',
-                     network: '@/network',
-                     common: '@/common'
-                 }
-             }
-         },
-         publicPath: './',
-         devServer: {
-             open: true,
-             port: 8080
-         }
-     }
+config.set('externals', {
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    axios: 'axios',
+    vuex: 'Vuex',
+    'vue-lazyload': 'VueLazyload'
+})
 ```
 
-     
+  
+
+``` javascript
+module.exports = {
+    chainWebpack: config => {
+        // 发布模式
+        config.when(process.env.NODE_ENV === 'production', config => {
+            config.entry('app').clear().add('./src/main-prod.js')
+
+            config.set('externals', {
+                vue: 'Vue',
+                'vue-router': 'VueRouter',
+                axios: 'axios',
+                vuex: 'Vuex',
+                'vue-lazyload': 'VueLazyload'
+            })
+        })
+
+        // 开发模式
+        config.when(process.env.NODE_ENV === 'development', config => {
+            config.entry('app').clear().add('./src/main-dev.js')
+        })
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+                assets: '@/assets',
+                components: '@/components',
+                views: '@/views',
+                network: '@/network',
+                common: '@/common'
+            }
+        }
+    },
+    publicPath: './',
+    devServer: {
+        open: true,
+        port: 8080
+    }
+}
+```
+
+ 
 
   2. 同时，需要在 public/index.html 文件的头部，添加如下的CDN资源引用
 
-$mdFormatter$35$mdFormatter$
+``` javascript
+      config.set('externals', {
+          vue: 'Vue',
+          'vue-router': 'VueRouter',
+          axios: 'axios',
+          vuex: 'Vuex',
+          'vue-lazyload': 'VueLazyload'
+      })
+```
 
 ``` html
      <!DOCTYPE html>
@@ -522,8 +444,6 @@ $mdFormatter$35$mdFormatter$
      
 
 ### 4. 外部 cdn 载入 vantUI
-
-* 注：理论上这样操作时可行的，但是操作后，vant 部分 组件失效
 
 1. 在 src/main-prod.js 文件中，将 import './plugins/vant.js' 移除
 
@@ -600,4 +520,28 @@ const Cart = () => import('views/cart/Cart')
 const Profile = () => import('views/profile/Profile')
 const Detail = () => import('views/detail/Detail')
 const Login = () => import('views/login/Login')
+```
+
+### 7. 图片懒加载
+
+使用 **VueLazyload** 插件，在需要懒加载的图片、背景图等地方，使用 v-lazy 来代替 src。
+
+* 安装插件
+
+  
+
+``` javascript
+  // 1. 安装插件
+  npm install VueLazyload--save - dev
+
+  // 2. 在 main.js 主文件中引入, 并且挂载
+  import Vue from 'vue'
+  import VueLazyload from 'vue-lazyload'
+
+  // options 是可选参数，详细配置项请前往官方文档查看
+  Vue.use(VueLazyload, options)
+
+      // 3. 使用懒加载
+      <
+      img v - lazy = "http://www.******.com/123.png" >
 ```

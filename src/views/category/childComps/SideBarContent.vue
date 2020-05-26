@@ -72,8 +72,9 @@ export default {
       this.offsetYs[this.active] = y
     },
     handleRefresh() {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         this.$refs.list.refreshing = false
+        clearTimeout(timer)
       }, 1000)
     },
     handleLoadMore() {
