@@ -26,8 +26,6 @@ export default {
     handleCategoryChange(index) {
       this.$emit('handleSideBarClick', index)
       this.$refs.sidebar.$el.scrollTop = this.$refs.sidebar.$children[index].$el.offsetTop - 49
-      console.log(this.$refs.sidebar.$children[index].$el.offsetTop)
-      // console.log(this.$refs.sidebar.$el.scrollTop)
     }
   }
 }
