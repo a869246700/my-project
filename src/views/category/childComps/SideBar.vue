@@ -1,5 +1,5 @@
 <template>
-  <van-sidebar v-model="activeKey" class="sidebar" @change="handleCategoryChange">
+  <van-sidebar v-model="activeKey" class="sidebar" @change="handleCategoryChange" ref="sidebar">
     <van-sidebar-item :title="item.title" v-for="(item, index) in categroyList" :key="index" />
   </van-sidebar>
 </template>
@@ -25,6 +25,9 @@ export default {
     // 监听侧边栏点击的index变化
     handleCategoryChange(index) {
       this.$emit('handleSideBarClick', index)
+      this.$refs.sidebar.$el.scrollTop = this.$refs.sidebar.$children[index].$el.offsetTop - 49
+      console.log(this.$refs.sidebar.$children[index].$el.offsetTop)
+      // console.log(this.$refs.sidebar.$el.scrollTop)
     }
   }
 }

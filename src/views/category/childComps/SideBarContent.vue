@@ -4,6 +4,7 @@
     <!-- 滚动视图 -->
     <my-scroll @onScroll="handleScroll" ref="scroll" class="scroll">
       <list @pullRefresh="handleRefresh" ref="list" @loadMore="handleLoadMore">
+        <img src="~assets/img/common/new.jpg" class="recommendations">
         <!-- 列表 -->
         <van-tabs
           v-model="active"
@@ -90,6 +91,11 @@ export default {
   flex: 1;
   height: calc(100vh - 99px);
   overflow: auto;
+
+  .recommendations {
+    height: 8rem;
+    width: 100%;
+  }
 
   .scroll {
     height: calc(100vh - 99px);
