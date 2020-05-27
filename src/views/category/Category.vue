@@ -15,6 +15,7 @@
         :tabControls="tabControls"
         :goodsList="goodsList"
         @handleTabClick="tabClick"
+        :cateList="cateList"
       />
     </div>
 
@@ -142,6 +143,10 @@ export default {
     goodsList() {
       if (this.currentIndex === -1 || this.categoryData[this.currentIndex].categoryDetail[this.currentType].length === 0) return {}
       return this.categoryData[this.currentIndex].categoryDetail
+    },
+    cateList() {
+      if (this.currentIndex === -1 || this.categoryData[this.currentIndex].categoryDetail[this.currentType].length === 0) return {}
+      return this.categoryData[this.currentIndex].subcategories
     }
   }
 }
