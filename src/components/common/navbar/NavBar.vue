@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar title="首页" left-text="返回" fixed :z-index="999">
+  <van-nav-bar title="首页" left-text="返回" fixed :z-index="999" class="nav-bar">
     <template #left>
       <span class="logo" @click="handleClickLogo">G</span>
     </template>
@@ -24,10 +24,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-nav-bar {
+.nav-bar {
   background-color: var(--color-tint);
   color: #fff;
-  height: 49px;
+  height: 44px;
 
   .logo {
     font-size: 32px;

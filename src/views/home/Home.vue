@@ -8,7 +8,7 @@
     </nav-bar>
 
     <!-- 滚动框 -->
-    <my-scroll class="scroll" ref="scroll" @onScroll="handleScroll">
+    <my-scroll class="scroll ignore" ref="scroll" @onScroll="handleScroll">
       <list @pullRefresh="handleRefresh" ref="list" @loadMore="getCurrentTypeData">
         <!-- 轮播图 -->
         <home-swiper :imgs="swiperList" />
@@ -186,11 +186,9 @@ export default {
 
 <style lang="less" scoped>
 #home {
-  margin-bottom: 50px;
-
   .scroll {
-    margin-top: 49px;
-    height: calc(100vh - 99px);
+    margin-top: 44px;
+    height: calc(100vh - 94px);
   }
 
   .tab-control {

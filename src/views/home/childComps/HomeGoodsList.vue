@@ -5,7 +5,7 @@
     animated
     sticky
     lazy-render
-    :offset-top="49"
+    :offset-top="44"
     @change="tabChange"
   >
     <van-tab :title="tabs[0].title" :key="0">

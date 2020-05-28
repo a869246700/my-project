@@ -1,8 +1,8 @@
 <template>
   <!-- 轮播图 -->
-  <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" :height="adaptHeight">
+  <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
     <van-swipe-item v-for="(item, index) in imgs" :key="index">
-      <img v-lazy="item.image" class="swiper-image" :height="adaptHeight" />
+      <img v-lazy="item.image" class="swiper-image" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -17,20 +17,15 @@ export default {
         return []
       }
     }
-  },
-  data() {
-    return {
-      adaptHeight: 0
-    }
-  },
-  mounted() {
-    // 通过监听窗口的大小来设置轮播图的高度
-    this.adaptHeight = document.documentElement.offsetWidth * 0.6
   }
 }
 </script>
 
 <style lang="less" scoped>
+.my-swipe {
+  height: 200px;
+}
+
 .my-swipe .van-swipe-item {
   color: #fff;
   text-align: center;
@@ -39,6 +34,7 @@ export default {
 
 .swiper-image {
   width: 100%;
+  height: 200px;
   vertical-align: middle;
 }
 </style>

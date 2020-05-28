@@ -4,7 +4,7 @@
     <detail-nav-bar @tabClick="handleTabClick" ref="nav" />
 
     <!-- 滚动视图 -->
-    <my-scroll @onScroll="handleScroll" ref="scroll" class="scroll">
+    <my-scroll @onScroll="handleScroll" ref="scroll" class="content">
       <list @pullRefresh="handleRefresh" ref="list" @loadMore="handleLoadMore">
         <!-- 商品轮播图 -->
         <detail-swiper :imgs="topImages" />
@@ -208,10 +208,11 @@ export default {
       // 加入购物车或者购买时，需要先登录
       // 如果没有登录，提醒需要登录，点击前往登录，或者取消前往登录
       if (!this.isLogin) {
-        this.$dialog.confirm({
-          title: '友情提示',
-          message: '您还未登录，请前往登录！'
-        })
+        this.$dialog
+          .confirm({
+            title: '友情提示',
+            message: '您还未登录，请前往登录！'
+          })
           .then(() => {
             this.handleToLogin()
           })
@@ -472,9 +473,9 @@ export default {
   position: relative;
   background-color: #fff;
 
-  .scroll {
-    margin-top: 49px;
-    height: calc(100vh - 96px);
+  .content {
+    margin-top: 44px;
+    height: calc(100vh - 93px);
   }
 }
 </style>

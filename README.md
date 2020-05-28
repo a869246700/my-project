@@ -541,7 +541,36 @@ const Login = () => import('views/login/Login')
   // options 是可选参数，详细配置项请前往官方文档查看
   Vue.use(VueLazyload, options)
 
-      // 3. 使用懒加载
-      <
-      img v - lazy = "http://www.******.com/123.png" >
+  // 3. 使用懒加载
+  <img v-lazy = "http://www.******.com/123.png" >
+```
+
+
+
+### 8. 解决移动端300ms延迟问题
+* 为什么移动端会出现300ms延迟呢
+  + 由于一些手机设备单机事件时，会预留300ms的时间去检测用户是否再一次点击，所以才会存在300ms延迟
+* 如何解决300ms延迟呢
+  + 使用插件 **FastClick** 解决
+
+``` javascript
+// 1. 安装 fastclick
+npm install fastclick --save
+
+// 2. 在 main.js 中引入
+import FastClick from 'fastclick'
+
+// 3. 使用
+FastClick.attach(document.body)
+
+```
+
+
+### 9. 移动端适配 px转换
+使用插件 px2vm 插件，将项目中所有的 px单位 转化成 vw单位
+```javascript
+// 1. 安装开发依赖
+npm install postcss-px-to-viewport --save-dev
+
+// 2. 在项目的主目录下创建 postcss.config.js 文件
 ```

@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar title="标题" left-arrow @click-left="handleGoBack" fixed>
+  <van-nav-bar left-arrow @click-left="handleGoBack" fixed>
     <template #title>
       <div class="center">
         <van-tabs v-model="active" @click="handleTabClick">
@@ -35,6 +35,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.nav-bar {
+  height: 44px;
+}
 .center {
   min-width: 200px;
 }

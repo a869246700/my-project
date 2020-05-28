@@ -6,7 +6,7 @@
          <span class="title">商品分类</span>
       </template>
     </nav-bar>
-    <div class="wrapper">
+    <div class="wrapper ignore">
       <!-- 侧边栏 -->
       <side-bar :categroyList="categroyList" @handleSideBarClick="handleSideBarClick" />
 
